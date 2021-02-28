@@ -5,5 +5,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     'react/jsx-filename-extension': 'off',
+    'react-native/no-inline-styles': 'off',
   },
 };
