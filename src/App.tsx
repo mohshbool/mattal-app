@@ -16,6 +16,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import 'react-native-gesture-handler';
+
 declare const global: {HermesInternal: null | {}};
 
 const App = () => {
