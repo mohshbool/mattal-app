@@ -1,0 +1,8 @@
+{
+  "plugins": ["stylelint-react-native"],
+  "processors": ["stylelint-processor-styled-components"],
+  "extends": ["stylelint-config-react-native-styled-components"],
+  "rules": {
+    "react-native/css-property-no-unknown": true
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "mattal",
+  "version": "0.0.1",
+  "author": "Mohammad Shbool <alshboolmoh@gmail.com>",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "android:release": "react-native run-android --variant release",
+    "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
+    "android:build:debug": "cd android/ && ./gradlew assembleDebug && cd .. && open android/app/build/outputs/apk/debug",
+    "android:build:release": "cd android/ && ./gradlew assembleRelease && cd .. && open android/app/build/outputs/apk/release",
+    "studio": "open -a /Applications/Android\\ Studio.app ./android/",
+    "ios": "react-native run-ios",
+    "ios:device": "react-native run-ios --device",
+    "ios:release": "react-native run-ios --configuration Release",
+    "ios:pods": "npx pod-install",
+    "xcode": "open ios/OffereeApp.xcworkspace",
+    "start": "react-native start",
+    "lint": "tslint 'src/**/*.{js,jsx,ts,tsx}' --project tsconfig.json",
+    "lint:stylelint": "stylelint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:styled": "stylelint --config=.stylelintstyledrc 'src/**/*.{js,jsx,ts,tsx}'",
+    "format": "prettier 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}' --write",
+    "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean --force"
+  },
+  "dependencies": {
+    "react": "16.13.1",
+    "react-native": "0.63.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/react-native": "^0.63.2",
+    "@types/react-test-renderer": "^16.9.2",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "husky": "4.3.8",
+    "lint-staged": "^10.5.4",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "prettier": "^2.2.1",
+    "react-test-renderer": "16.13.1",
+    "stylelint": "^13.10.0",
+    "stylelint-react-native": "^2.2.0",
+    "typescript": "^3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "tslint --fix --project tsconfig.json",
+      "stylelint --fix"
+    ],
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  }
+}
