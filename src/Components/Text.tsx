@@ -1,40 +1,46 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text as RNText,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 
-interface ButtonProps {
+interface TextProps {
   text: string;
-  onPress: () => void;
+  style?: TextStyle;
+  containerStyle?: ViewStyle;
 }
 
-const Button: React.FC<ButtonProps> = ({text, onPress}) => {
+const Text: React.FC<TextProps & TextProps> = ({
+  text,
+  style,
+  containerStyle,
+  ...props
+}) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.container}>
-        <Text style={styles.text}>{text}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={[styles.container, containerStyle]}>
+      <RNText style={[styles.text, style]} {...props}>
+        {text}
+      </RNText>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    margin: 8,
-    paddingVertical: 15,
-    paddingHorizontal: 38,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.primary,
+    flex: 1,
   },
   text: {
     textAlign: 'center',
     fontSize: Fonts.lg,
     fontWeight: '500',
     paddingHorizontal: 8,
-    color: Colors.secondary,
+    color: Colors.primary,
   },
 });
 
-export default Button;
+export default Text;
