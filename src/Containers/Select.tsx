@@ -23,6 +23,16 @@ const Select: React.FC = () => {
         />
       </View>
     </SafeAreaView>
+    //   <Text
+    //   text="Fuhies - Dabouq - Abdoun - Jubieha - Dabouq - Abdoun - Jubieha"
+    //   containerStyle={{
+    //     position: 'absolute',
+    //     transform: [{rotate: '90deg'}],
+    //     right: 0,
+    //     bottom: '50%',
+    //   }}
+    //   style={{textAlign: 'left'}}
+    // />
   );
 };
 
