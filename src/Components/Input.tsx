@@ -7,12 +7,19 @@ import {Colors} from '../Theme/Theme';
 interface InputProps {
   value: string;
   onChange: (text: string) => void;
+  placeholder: string;
 }
 
-const Input: React.FC<InputProps> = ({value, onChange}) => {
+const Input: React.FC<InputProps> = ({value, onChange, placeholder}) => {
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} value={value} onChangeText={onChange} />
+      <TextInput
+        style={styles.input}
+        value={value}
+        onChangeText={onChange}
+        placeholder={placeholder}
+        placeholderTextColor="#808080"
+      />
     </View>
   );
 };
