@@ -15,10 +15,6 @@ export function normalize(size: number) {
 }
 
 export default {
-  regular: 'Montserrat-Regular',
-  bold: 'Montserrat-Bold',
-  extraBold: 'Montserrat-ExtraBold',
-  semiBold: 'Montserrat-SemiBold',
   xxxsm: normalize(8),
   xxsm: normalize(10),
   xsm: normalize(12),
