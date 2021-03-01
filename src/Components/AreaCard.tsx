@@ -15,32 +15,39 @@ const AreaCard: React.FC<AreaCardProps> = ({label}) => {
   const dispatch = useDispatch();
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        dispatch(updateSelectedArea(label));
-        goBack();
-      }}>
-      <View style={styles.container}>
-        <Text style={styles.text}>{label}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.border}>
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(updateSelectedArea(label));
+          goBack();
+        }}>
+        <View style={styles.container}>
+          <Text style={styles.text}>{label}</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  border: {
+    width: '47%',
+    borderRadius: 5,
+    borderColor: Colors.primary,
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+    marginVertical: 8,
+  },
   container: {
-    flex: 1,
-    width: '100%',
-    paddingVertical: 15,
-    alignItems: 'flex-start',
-    borderBottomWidth: 1,
+    paddingVertical: 25,
     borderBottomColor: Colors.primary,
   },
   text: {
     textAlign: 'center',
-    fontSize: Fonts.lg,
-    fontWeight: '500',
-    paddingHorizontal: 8,
+    fontSize: Fonts.l,
+    fontWeight: '600',
     color: Colors.primary,
   },
 });
