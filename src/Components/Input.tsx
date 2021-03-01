@@ -20,8 +20,8 @@ const Input: React.FC<InputProps> = ({value, onChange}) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingBottom: 15,
-    paddingTop: 10,
+    paddingBottom: 12,
+    paddingTop: 8,
     paddingHorizontal: 12,
     borderRadius: 12,
     justifyContent: 'center',
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: Fonts.lg,
     fontWeight: '600',
-    paddingTop: 6,
-    paddingBottom: 8,
-    paddingHorizontal: 8,
+    paddingTop: 2,
+    paddingBottom: 4,
+    paddingHorizontal: 6,
     color: Colors.primary,
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
