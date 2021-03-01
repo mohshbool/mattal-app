@@ -1,5 +1,8 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {updateSelectedArea} from '../Action';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 
@@ -8,8 +11,15 @@ interface AreaCardProps {
 }
 
 const AreaCard: React.FC<AreaCardProps> = ({label}) => {
+  const {goBack} = useNavigation();
+  const dispatch = useDispatch();
+
   return (
-    <TouchableOpacity onPress={() => console.log(label)}>
+    <TouchableOpacity
+      onPress={() => {
+        dispatch(updateSelectedArea(label));
+        goBack();
+      }}>
       <View style={styles.container}>
         <Text style={styles.text}>{label}</Text>
       </View>
