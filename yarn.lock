@@ -936,6 +936,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
+"@react-native-community/viewpager@^5.0.9":
+  version "5.0.9"
+  resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-5.0.9.tgz#277153d3f108ae68dfe6a27a061d506858fc897f"
+  integrity sha512-yjwpY2htsaw3vEKRqYmJLKjrYpzODEtVtKtKh8QEi1T+okzZhRKXFgPTWg3pVYMITDfH0vFqkqjWFwDiFj0nmg==
+
 "@react-native-masked-view/masked-view@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@react-native-masked-view/masked-view/-/masked-view-0.2.2.tgz#6cde4d27c1ac02783be1f3f194da5d4bb15bbef2"

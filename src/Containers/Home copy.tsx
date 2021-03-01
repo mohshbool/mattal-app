@@ -1,31 +1,12 @@
-import ViewPager from '@react-native-community/viewpager';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {AreaReducer} from '../Action/types';
+import Button from '../Components/Button';
 import {RootState} from '../Reducer';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
-import {Mattal} from '../types';
-import MattalHero from './MattalHero';
-import Select from './Select';
-
-const data: Mattal[] = [
-  {
-    area: 'Dabouq',
-    images: [
-      'https://cf.bstatic.com/images/hotel/max1024x768/241/241074118.jpg',
-    ],
-    name: 'Al Mattal',
-    review: 4,
-    maps_url: 'https://goo.gl/maps/UvE2K78aksfGqhiQ6',
-    facilities: {
-      supermarket: true,
-      food: false,
-    },
-  },
-];
 
 const Home: React.FC = () => {
   const {navigate} = useNavigation();
@@ -33,12 +14,17 @@ const Home: React.FC = () => {
     (state) => state.Area,
   ) as AreaReducer;
   return (
-    <ViewPager style={styles.container} initialPage={0} orientation="vertical">
-      <Select />
-      {data.map((mattal, i) => (
-        <MattalHero key={i} mattal={mattal} />
-      ))}
-    </ViewPager>
+    <View style={styles.container}>
+      <Button text="Pick area" onPress={() => navigate('Select')} />
+      {selectedArea.length > 1 ? (
+        <Text style={styles.whereYouAre}>You want to go to {selectedArea}</Text>
+      ) : (
+        <Text style={styles.whereYouAre}>
+          Please choose where you want to go
+        </Text>
+      )}
+      <Button text="Find me a Mattal" onPress={() => console.log('yes')} />
+    </View>
   );
 };
 

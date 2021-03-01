@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import AreaCard from '../Components/AreaCard';
 import {Colors} from '../Theme/Theme';
