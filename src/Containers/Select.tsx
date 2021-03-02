@@ -1,4 +1,5 @@
 import React from 'react';
+import * as _ from 'lodash';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {apiRequest} from '../API';
@@ -20,14 +21,25 @@ const Select: React.FC = () => {
     }
   }, [areas]);
 
+  console.log(
+    _.map(areas, (area, index) => ({
+      area,
+      index,
+    })),
+  );
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <FlatList
-          data={areas}
+          data={_.map(areas, (name, index) => ({
+            name,
+            index,
+          }))}
           numColumns={2}
           contentContainerStyle={styles.list}
-          renderItem={({item}) => <AreaCard label={item} />}
+          keyExtractor={(item) => item.index}
+          renderItem={({item}) => <AreaCard label={item.name} />}
         />
       </View>
     </SafeAreaView>
