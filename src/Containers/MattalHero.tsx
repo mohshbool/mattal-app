@@ -1,5 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, View, Dimensions, Linking} from 'react-native';
+import Swiper from 'react-native-swiper';
+
 import Button from '../Components/Button';
 import Text from '../Components/Text';
 import Fonts from '../Theme/Fonts';
@@ -12,14 +14,19 @@ interface MattalHeroProps {
 
 const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: `http://192.168.1.123:5000/public/${mattal.images[0].filename}`,
-        }}
-        resizeMode="cover"
-      />
+    <View key={mattal._id} style={styles.container}>
+      <Swiper>
+        {mattal.images.map((image) => (
+          <Image
+            key={image._id}
+            style={styles.image}
+            source={{
+              uri: `http://192.168.1.123:5000/public/${image.filename}`,
+            }}
+            resizeMode="cover"
+          />
+        ))}
+      </Swiper>
       <Text
         text={mattal.name}
         style={styles.area}
