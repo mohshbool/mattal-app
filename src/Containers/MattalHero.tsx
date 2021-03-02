@@ -15,7 +15,9 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={{uri: mattal.images[0]}}
+        source={{
+          uri: `http://192.168.1.123:5000/public/${mattal.images[0].filename}`,
+        }}
         resizeMode="cover"
       />
       <Text

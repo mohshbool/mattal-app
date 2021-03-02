@@ -1,10 +1,18 @@
 export interface Mattal {
+  _id: string;
+  images: [
+    {
+      _id: string;
+      filename: string;
+      type: string;
+      created_at: string;
+    },
+  ];
   name: string;
   area: string;
-  images: string[];
   maps_url: string;
   facilities: Facilities;
-  review: number;
+  created_at: string;
 }
 
 export interface Facilities {
