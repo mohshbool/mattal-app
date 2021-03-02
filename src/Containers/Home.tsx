@@ -16,7 +16,7 @@ const Home: React.FC = () => {
     (state) => state.Area,
   ) as AreaReducer;
 
-  const [areas, setAreas] = React.useState<Mattal[]>([]);
+  const [mattals, setMattals] = React.useState<Mattal[]>([]);
   const viewPager = React.useRef<ViewPager>(null);
 
   React.useEffect(() => {
@@ -26,7 +26,7 @@ const Home: React.FC = () => {
         params: {area: selectedArea},
       })
         .then((req) => {
-          setAreas(req);
+          setMattals(req);
           setTimeout(() => viewPager.current?.setPage(1), 500);
         })
         .catch((e) => console.error(e.message));
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
       initialPage={0}
       orientation="vertical">
       <Select />
-      {areas.map((mattal, i) => (
+      {mattals.map((mattal, i) => (
         <MattalHero key={i} mattal={mattal} />
       ))}
     </ViewPager>

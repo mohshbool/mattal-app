@@ -1,25 +1,33 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import {apiRequest} from '../API';
 import AreaCard from '../Components/AreaCard';
 import {Colors} from '../Theme/Theme';
 
-const data = [
-  {id: '321h', name: 'Dabouq'},
-  {id: '321h2', name: 'Abdoun'},
-  {id: '321h3', name: 'Fuhies'},
-  {id: '321h4', name: 'Jubieha'},
-];
-
 const Select: React.FC = () => {
+  const [areas, setAreas] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    if (areas.length === 0) {
+      apiRequest<string[]>({
+        url: '/mattal/areas',
+      })
+        .then((req) => {
+          setAreas(req);
+        })
+        .catch((e) => console.error(e.message));
+    }
+  }, [areas]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <FlatList
-          data={data}
+          data={areas}
           numColumns={2}
           contentContainerStyle={styles.list}
-          renderItem={({item}) => <AreaCard label={item.name} />}
+          renderItem={({item}) => <AreaCard label={item} />}
         />
       </View>
     </SafeAreaView>
