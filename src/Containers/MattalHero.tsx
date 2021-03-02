@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, View, Dimensions} from 'react-native';
+import {Image, StyleSheet, View, Dimensions, Linking} from 'react-native';
 import Button from '../Components/Button';
 import Text from '../Components/Text';
 import Fonts from '../Theme/Fonts';
@@ -49,7 +49,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
       )}
       <Button
         text="Take me to the Mattal"
-        onPress={() => console.log('s')}
+        onPress={() => Linking.openURL(mattal.maps_url)}
         outlined
         containerStyle={styles.buttonContainer}
         textStyle={styles.buttonText}
