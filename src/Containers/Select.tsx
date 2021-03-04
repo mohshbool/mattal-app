@@ -8,25 +8,20 @@ import {Colors} from '../Theme/Theme';
 
 const Select: React.FC = () => {
   const [areas, setAreas] = React.useState<string[]>([]);
+  const [alreadyFetched, setAlreadyFetched] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    if (areas.length === 0) {
+    if (areas.length === 0 && !alreadyFetched) {
       apiRequest<string[]>({
         url: '/mattal/areas',
       })
         .then((req) => {
           setAreas(req);
+          setAlreadyFetched(true);
         })
         .catch((e) => console.error(e.message));
     }
-  }, [areas]);
-
-  console.log(
-    _.map(areas, (area, index) => ({
-      area,
-      index,
-    })),
-  );
+  }, [areas, alreadyFetched]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
