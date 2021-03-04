@@ -4,6 +4,7 @@ import Swiper from 'react-native-swiper';
 
 import Button from '../Components/Button';
 import Text from '../Components/Text';
+import {SERVER_URL} from '../Configs';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 import {Mattal} from '../types';
@@ -21,7 +22,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
             key={image._id}
             style={styles.image}
             source={{
-              uri: `http://192.168.1.123:5000/public/${image.filename}`,
+              uri: `${SERVER_URL}/public/${image.filename}`,
             }}
             resizeMode="cover"
           />
