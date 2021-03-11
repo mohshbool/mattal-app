@@ -2,7 +2,7 @@ import ViewPager from '@react-native-community/viewpager';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import {AreaReducer} from '../Action/types';
+import {AreaReducer, ConfigsReducer} from '../Action/types';
 import {apiRequest} from '../API';
 import {RootState} from '../Reducer';
 import Fonts from '../Theme/Fonts';
@@ -15,6 +15,9 @@ const Home: React.FC = () => {
   const {selectedArea} = useSelector<RootState>(
     (state) => state.Area,
   ) as AreaReducer;
+  const {fcm_token} = useSelector<RootState>(
+    (state) => state.Configs,
+  ) as ConfigsReducer;
 
   const [mattals, setMattals] = React.useState<Mattal[]>([]);
   const viewPager = React.useRef<ViewPager>(null);
@@ -24,6 +27,9 @@ const Home: React.FC = () => {
       apiRequest<Mattal[]>({
         url: '/mattal/by-area',
         params: {area: selectedArea},
+        headers: {
+          Authorization: `Bearer ${fcm_token}`,
+        },
       })
         .then((req) => {
           setMattals(req);
@@ -31,6 +37,7 @@ const Home: React.FC = () => {
         })
         .catch((e) => console.error(e.message));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedArea]);
 
   return (
