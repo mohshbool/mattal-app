@@ -1,4 +1,4 @@
-package com.mattal;
+package com.shbool.mattal;
 
 import com.facebook.react.ReactActivity;
 
