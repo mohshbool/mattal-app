@@ -2,6 +2,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useRef} from 'react';
 import {Animated, Platform, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import messaging from '@react-native-firebase/messaging';
 
 import {updateConfigs} from '../Action';
 import {ConfigsRedcuer} from '../Action/types';
@@ -28,16 +29,35 @@ const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
   const LogoFadeIn = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (!fcm_token) {
-      apiRequest<CreateDeviceResponse>({
-        url: '/device/create',
-        method: 'POST',
-        data: {fcm_token: 'dsadsas', os: Platform.OS},
-      })
-        .then((req) => {
-          dispatch(updateConfigs({fcm_token: req.fcm_token}));
+    const getNotificationPermissions = async () => {
+      await messaging()
+        .requestPermission()
+        .then(() => {
+          messaging()
+            .getToken()
+            .then((firebase_token) => {
+              apiRequest<CreateDeviceResponse>({
+                url: '/device/create',
+                method: 'POST',
+                data: {fcm_token: firebase_token, os: Platform.OS},
+              })
+                .then((req) => {
+                  dispatch(updateConfigs({fcm_token: req.fcm_token}));
+                })
+                .catch((e) => console.error(e.message));
+            })
+            .catch((err) => {
+              // tslint:disable-next-line: no-console
+              console.log(err);
+            });
         })
-        .catch((e) => console.error(e.message));
+        .catch((error) => {
+          // tslint:disable-next-line: no-console
+          console.log(error);
+        });
+    };
+    if (!fcm_token) {
+      getNotificationPermissions();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
