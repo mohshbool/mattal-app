@@ -1,8 +1,8 @@
-import {ActionTypes, ConfigsRedcuer, UPDATE_CONFIGS} from '../Action/types';
+import {ActionTypes, ConfigsReducer, UPDATE_CONFIGS} from '../Action/types';
 
-const initialState: ConfigsRedcuer = {};
+const initialState: ConfigsReducer = {};
 
-export default (state = initialState, action: ActionTypes): ConfigsRedcuer => {
+export default (state = initialState, action: ActionTypes): ConfigsReducer => {
   switch (action.type) {
     case UPDATE_CONFIGS:
       return {

@@ -1,11 +1,11 @@
 import {
   ActionTypes,
-  ConfigsRedcuer,
+  ConfigsReducer,
   UPDATE_CONFIGS,
   UPDATE_SELECTED_AREA,
 } from './types';
 
-export const updateConfigs = (configs: ConfigsRedcuer): ActionTypes => ({
+export const updateConfigs = (configs: ConfigsReducer): ActionTypes => ({
   type: UPDATE_CONFIGS,
   payload: configs,
 });

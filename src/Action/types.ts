@@ -1,7 +1,7 @@
 export const UPDATE_CONFIGS = 'UPDATE_CONFIGS';
 export const UPDATE_SELECTED_AREA = 'UPDATE_SELECTED_AREA';
 
-export interface ConfigsRedcuer {
+export interface ConfigsReducer {
   fcm_token?: string;
 }
 
@@ -11,7 +11,7 @@ export interface AreaReducer {
 
 interface UpdateConfigs {
   type: typeof UPDATE_CONFIGS;
-  payload: ConfigsRedcuer;
+  payload: ConfigsReducer;
 }
 
 interface UpdateSelectedArea {

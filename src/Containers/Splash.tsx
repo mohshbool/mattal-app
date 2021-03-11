@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
 
 import {updateConfigs} from '../Action';
-import {ConfigsRedcuer} from '../Action/types';
+import {ConfigsReducer} from '../Action/types';
 import {apiRequest} from '../API';
 import {RootStackParamList} from '../App';
 import {RootState} from '../Reducer';
@@ -24,7 +24,7 @@ const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
   const dispatch = useDispatch();
   const {fcm_token} = useSelector<RootState>(
     (state) => state.Configs,
-  ) as ConfigsRedcuer;
+  ) as ConfigsReducer;
 
   const LogoFadeIn = useRef(new Animated.Value(0)).current;
 
