@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   Linking,
+  Dimensions,
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 25,
+    paddingTop: Dimensions.get('window').height * 0.02,
     paddingBottom: 5,
     paddingHorizontal: 20,
     flexDirection: 'row',
