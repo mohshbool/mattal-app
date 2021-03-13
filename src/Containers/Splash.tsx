@@ -69,9 +69,12 @@ const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
       useNativeDriver: true,
     }).start();
 
-    const timeout = setTimeout(() => fcm_token && replace('Home'), 2500);
+    if (fcm_token) {
+      const timeout = setTimeout(() => fcm_token && replace('Home'), 1500);
 
-    return () => clearTimeout(timeout);
+      return () => clearTimeout(timeout);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fcm_token]);
 
