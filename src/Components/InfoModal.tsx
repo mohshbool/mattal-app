@@ -25,6 +25,7 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
   return (
     <Modal
       isVisible={isVisible}
+      onBackButtonPress={closeModal}
       onBackdropPress={closeModal}
       onSwipeComplete={closeModal}
       swipeDirection="up">
@@ -122,7 +123,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   outerContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
