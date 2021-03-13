@@ -1,6 +1,5 @@
 import React from 'react';
 import * as _ from 'lodash';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,6 +8,7 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 
@@ -19,9 +19,11 @@ import {ConfigsReducer} from '../Action/types';
 import {RootState} from '../Reducer';
 import Text from '../Components/Text';
 import Fonts from '../Theme/Fonts';
+import InfoModal from '../Components/InfoModal';
 
 const Select: React.FC = () => {
   const [areas, setAreas] = React.useState<string[]>([]);
+  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [alreadyFetched, setAlreadyFetched] = React.useState<boolean>(false);
   const {fcm_token} = useSelector<RootState>(
     (state) => state.Configs,
@@ -66,10 +68,10 @@ const Select: React.FC = () => {
             </TouchableOpacity>
           </View>
           <View>
-            <Text text="Mattal" style={styles.headerText} />
+            <Text text="Mattal 🇯🇴" style={styles.headerText} />
           </View>
           <View>
-            <TouchableOpacity onPress={() => console.log('')}>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
               <Ionicon
                 name="ios-information-circle-outline"
                 size={Fonts.xxxl}
@@ -89,6 +91,7 @@ const Select: React.FC = () => {
           renderItem={({item}) => <AreaCard label={item.name} />}
         />
       </View>
+      <InfoModal isVisible={modalVisible} setModalVisible={setModalVisible} />
     </SafeAreaView>
     //   <Text
     //   text="Fuhies - Dabouq - Abdoun - Jubieha - Dabouq - Abdoun - Jubieha"

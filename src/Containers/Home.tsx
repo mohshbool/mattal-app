@@ -2,6 +2,7 @@ import ViewPager from '@react-native-community/viewpager';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
+
 import {AreaReducer, ConfigsReducer} from '../Action/types';
 import {apiRequest} from '../API';
 import {RootState} from '../Reducer';
@@ -19,8 +20,8 @@ const Home: React.FC = () => {
     (state) => state.Configs,
   ) as ConfigsReducer;
 
-  const [mattals, setMattals] = React.useState<Mattal[]>([]);
   const viewPager = React.useRef<ViewPager>(null);
+  const [mattals, setMattals] = React.useState<Mattal[]>([]);
 
   React.useEffect(() => {
     if (selectedArea.length > 1) {
