@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useRef} from 'react';
-import {Animated, Platform, Text} from 'react-native';
+import {Animated, Image, Platform} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
 
@@ -69,7 +69,7 @@ const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
       useNativeDriver: true,
     }).start();
 
-    const timeout = setTimeout(() => fcm_token && replace('Home'), 3000);
+    const timeout = setTimeout(() => fcm_token && replace('Home'), 2500);
 
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,7 +83,10 @@ const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
         alignItems: 'center',
         opacity: LogoFadeIn,
       }}>
-      <Text style={{fontSize: 50}}>Mattal - مطّل</Text>
+      <Image
+        source={require('../Assets/Images/splash-init.jpeg')}
+        style={{width: '100%', height: '100%'}}
+      />
     </Animated.View>
   );
 };
