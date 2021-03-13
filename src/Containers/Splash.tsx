@@ -69,11 +69,11 @@ const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
       useNativeDriver: true,
     }).start();
 
-    const timeout = setTimeout(() => replace('Home'), 1000);
+    const timeout = setTimeout(() => fcm_token && replace('Home'), 3000);
 
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fcm_token]);
 
   return (
     <Animated.View
