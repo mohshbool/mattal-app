@@ -17,7 +17,11 @@ interface InfoModalProps {
 const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
   const closeModal = () => setModalVisible(false);
   return (
-    <Modal isVisible={isVisible} onBackdropPress={closeModal}>
+    <Modal
+      isVisible={isVisible}
+      onBackdropPress={closeModal}
+      onSwipeComplete={closeModal}
+      swipeDirection="up">
       <View style={styles.container}>
         <Text
           text="Mattal is a cross-platform application developer with ❤️ in Jordan by teenagers"
