@@ -9,7 +9,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {store} from './Store';
 import Splash from './Containers/Splash';
 import Home from './Containers/Home';
-import Select from './Containers/Select';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -38,11 +37,6 @@ const App = () => {
             <Stack.Screen
               name="Home"
               component={Home}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Select"
-              component={Select}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
