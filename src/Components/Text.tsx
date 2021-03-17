@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     paddingHorizontal: 8,
     color: Colors.primary,
+    fontFamily: Fonts.extrabold,
   },
 });
 

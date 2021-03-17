@@ -25,4 +25,10 @@ export default {
   xl: normalize(22),
   xxl: normalize(24),
   xxxl: normalize(28),
+  thing: 'Montserrat-Thin',
+  regular: 'Montserrat-Regular',
+  bold: 'Montserrat-Bold',
+  semibold: 'Montserrat-SemiBold',
+  extrabold: 'Montserrat-ExtraBold',
+  black: 'Montserrat-Black',
 };
