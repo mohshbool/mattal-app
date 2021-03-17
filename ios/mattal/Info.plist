@@ -30,11 +30,6 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>52.19.121.145</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
