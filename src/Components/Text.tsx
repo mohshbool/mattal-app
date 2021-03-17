@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     color: Colors.primary,
     fontFamily: Fonts.extrabold,
+    letterSpacing: 0.001,
   },
 });
 

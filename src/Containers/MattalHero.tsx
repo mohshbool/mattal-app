@@ -30,12 +30,12 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
       </Swiper>
       <Text
         text={mattal.name}
-        style={styles.area}
+        style={styles.name}
         containerStyle={styles.areaContainer}
       />
       <Text
         text={mattal.area}
-        style={styles.name}
+        style={styles.area}
         containerStyle={styles.nameContainer}
       />
       {mattal.facilities.supermarket && (
@@ -79,19 +79,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: -1,
   },
-  text: {
-    textAlign: 'center',
-    fontSize: Fonts.lg,
-    fontWeight: '500',
-    paddingHorizontal: 8,
-    color: Colors.secondary,
-  },
   areaContainer: {
     position: 'absolute',
     left: 12,
     bottom: 120,
   },
-  area: {
+  name: {
     color: Colors.white,
     fontWeight: '700',
     fontSize: Fonts.xl,
@@ -101,7 +94,7 @@ const styles = StyleSheet.create({
     left: 12,
     bottom: 90,
   },
-  name: {
+  area: {
     color: Colors.white,
     fontWeight: '500',
     fontSize: Fonts.lg,

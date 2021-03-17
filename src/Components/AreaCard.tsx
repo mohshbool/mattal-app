@@ -1,9 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {updateSelectedArea} from '../Action';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
+import Text from './Text';
 
 interface AreaCardProps {
   label: string;
@@ -18,9 +19,11 @@ const AreaCard: React.FC<AreaCardProps> = ({label}) => {
         onPress={() => {
           dispatch(updateSelectedArea(label));
         }}>
-        <View style={styles.container}>
-          <Text style={styles.text}>{label}</Text>
-        </View>
+        <Text
+          text={label}
+          containerStyle={styles.container}
+          style={styles.text}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -38,14 +41,14 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   container: {
+    flex: 0,
     paddingVertical: 25,
     borderBottomColor: Colors.primary,
   },
   text: {
     textAlign: 'center',
-    fontSize: Fonts.l,
-    fontWeight: '600',
     color: Colors.primary,
+    fontFamily: Fonts.regular,
   },
 });
 

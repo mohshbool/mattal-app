@@ -4,7 +4,6 @@ import {
   Text,
   TextStyle,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
 import Fonts from '../Theme/Fonts';
@@ -55,9 +54,11 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontSize: Fonts.lg,
-    fontWeight: '500',
+    fontWeight: '600',
     paddingHorizontal: 8,
     color: Colors.secondary,
+    fontFamily: Fonts.regular,
+    letterSpacing: 0.01,
   },
   outlinedContainer: {
     borderWidth: 2.5,
