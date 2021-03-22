@@ -12,6 +12,8 @@ export interface Mattal {
   area: string;
   maps_url: string;
   facilities: Facilities;
+  is_todays_pick: boolean;
+  last_todays_pick: string;
   created_at: string;
 }
 

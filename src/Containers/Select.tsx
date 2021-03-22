@@ -8,10 +8,11 @@ import {
   TouchableOpacity,
   Linking,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {apiRequest} from '../API';
 import AreaCard from '../Components/AreaCard';
@@ -21,8 +22,17 @@ import {RootState} from '../Reducer';
 import Text from '../Components/Text';
 import Fonts from '../Theme/Fonts';
 import InfoModal from '../Components/InfoModal';
+import Button from '../Components/Button';
+import {Mattal} from '../types';
+import {updateSelectedArea} from '../Action';
 
-const Select: React.FC = () => {
+interface SelectProps {
+  todaysMattal?: Mattal;
+  setMattals: any;
+}
+
+const Select: React.FC<SelectProps> = ({todaysMattal, setMattals}) => {
+  const dispatch = useDispatch();
   const [areas, setAreas] = React.useState<string[]>([]);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [alreadyFetched, setAlreadyFetched] = React.useState<boolean>(false);
@@ -81,16 +91,35 @@ const Select: React.FC = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <FlatList
-          data={_.map(areas, (name, index) => ({
-            name,
-            index,
-          }))}
-          numColumns={2}
-          contentContainerStyle={styles.list}
-          keyExtractor={(item) => String(item.index)}
-          renderItem={({item}) => <AreaCard label={item.name} />}
-        />
+        {!todaysMattal || !areas ? (
+          <ActivityIndicator
+            size="large"
+            color={Colors.primary}
+            style={styles.loader}
+          />
+        ) : (
+          <>
+            <Button
+              text={`Today's Mattal: ${todaysMattal?.name}`}
+              onPress={() => {
+                setMattals([todaysMattal]);
+                dispatch(updateSelectedArea(todaysMattal?.area));
+              }}
+              textStyle={styles.todaysText}
+              containerStyle={styles.todaysTextContainer}
+            />
+            <FlatList
+              data={_.map(areas, (name, index) => ({
+                name,
+                index,
+              }))}
+              numColumns={2}
+              contentContainerStyle={styles.list}
+              keyExtractor={(item) => String(item.index)}
+              renderItem={({item}) => <AreaCard label={item.name} />}
+            />
+          </>
+        )}
       </View>
       <InfoModal isVisible={modalVisible} setModalVisible={setModalVisible} />
     </SafeAreaView>
@@ -124,11 +153,25 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: Fonts.xl,
   },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     paddingHorizontal: 20,
     alignItems: 'center',
     backgroundColor: Colors.background,
+  },
+  todaysText: {
+    fontSize: Fonts.sm,
+  },
+  todaysTextContainer: {
+    padding: 0,
+    width: '96%',
+    marginTop: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 5,
   },
   list: {
     flex: 1,

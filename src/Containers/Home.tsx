@@ -1,7 +1,8 @@
-import ViewPager from '@react-native-community/viewpager';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
+import ViewPager from '@react-native-community/viewpager';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AreaReducer, ConfigsReducer} from '../Action/types';
 import {apiRequest} from '../API';
@@ -21,7 +22,27 @@ const Home: React.FC = () => {
   ) as ConfigsReducer;
 
   const viewPager = React.useRef<ViewPager>(null);
-  const [mattals, setMattals] = React.useState<Mattal[]>([]);
+  const [mattals, setMattals] = React.useState<Mattal[] | undefined>([]);
+  const [todaysMattal, setTodaysMattal] = React.useState<Mattal>();
+
+  React.useEffect(() => {
+    apiRequest<Mattal>({
+      url: '/mattal/todays',
+      headers: {
+        Authorization: `Bearer ${fcm_token}`,
+      },
+    })
+      .then((req) => {
+        setTodaysMattal(req);
+      })
+      .catch((e) => {
+        console.error(e.message);
+        if (e.message === 'Request failed with status code 403') {
+          AsyncStorage.clear();
+        }
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   React.useEffect(() => {
     if (selectedArea.length > 1) {
@@ -47,8 +68,8 @@ const Home: React.FC = () => {
       style={styles.container}
       initialPage={0}
       orientation="vertical">
-      <Select />
-      {mattals.map((mattal, i) => (
+      <Select todaysMattal={todaysMattal} setMattals={setMattals} />
+      {mattals?.map((mattal, i) => (
         <MattalHero key={i} mattal={mattal} />
       ))}
     </ViewPager>
