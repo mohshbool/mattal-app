@@ -16,7 +16,7 @@ interface MattalHeroProps {
 const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
   return (
     <View key={mattal._id} style={styles.container}>
-      <Swiper>
+      <Swiper showsPagination={false}>
         {mattal.images.map((image) => (
           <Image
             key={image._id}
