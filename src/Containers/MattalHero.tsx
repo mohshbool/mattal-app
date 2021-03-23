@@ -1,5 +1,13 @@
+import _ from 'lodash';
 import React from 'react';
-import {Image, StyleSheet, View, Dimensions, Linking} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  View,
+  Dimensions,
+  Linking,
+  ActivityIndicator,
+} from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import Button from '../Components/Button';
@@ -13,19 +21,42 @@ interface MattalHeroProps {
   mattal: Mattal;
 }
 
+function replace(array: any[], index: number, replacement: any) {
+  return array
+    .slice(0, index)
+    .concat([replacement])
+    .concat(array.slice(index + 1));
+}
+
 const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
+  const [imageLoading, setImageLoading] = React.useState<boolean[]>(
+    _.map(_.range(0, mattal.images.length), () => true),
+  );
+
   return (
     <View key={mattal._id} style={styles.container}>
       <Swiper showsPagination={false}>
-        {mattal.images.map((image) => (
-          <Image
-            key={image._id}
-            style={styles.image}
-            source={{
-              uri: `${SERVER_URL}/public/${image.filename}`,
-            }}
-            resizeMode="cover"
-          />
+        {mattal.images.map((image, i) => (
+          <>
+            <Image
+              style={styles.image}
+              source={{
+                uri: `${SERVER_URL}/public/${image.filename}`,
+              }}
+              onLoadStart={() =>
+                setImageLoading(replace(imageLoading, i, true))
+              }
+              onLoad={() => setImageLoading(replace(imageLoading, i, false))}
+              resizeMode="cover"
+            />
+            {imageLoading[i] && (
+              <ActivityIndicator
+                size="large"
+                color={Colors.primary}
+                style={styles.loader}
+              />
+            )}
+          </>
         ))}
       </Swiper>
       <Text
@@ -72,6 +103,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: Dimensions.get('screen').width,
     height: Dimensions.get('screen').height,
+  },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
   },
   image: {
     width: '100%',
