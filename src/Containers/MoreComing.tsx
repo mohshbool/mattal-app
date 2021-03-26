@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  Dimensions,
-  Image,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  View,
-  Linking,
-} from 'react-native';
+import {Dimensions, Image, StyleSheet, View, Linking} from 'react-native';
 import {useSelector} from 'react-redux';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Colors} from '../Theme/Theme';
 import {AreaReducer} from '../Action/types';
@@ -20,12 +13,13 @@ import Button from '../Components/Button';
 const {width} = Dimensions.get('screen');
 
 const MoreComing: React.FC = () => {
+  const {top} = useSafeAreaInsets();
   const {selectedArea} = useSelector<RootState>(
     (state) => state.Area,
   ) as AreaReducer;
 
   return (
-    <SafeAreaView key={2123} style={styles.safeArea}>
+    <View key={2123} style={{paddingTop: top}}>
       <View style={styles.container}>
         <Image
           source={require('../Assets/Images/more-top.jpeg')}
@@ -56,16 +50,12 @@ const MoreComing: React.FC = () => {
           }
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   noFlex: {flex: 0},
-  safeArea: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
   container: {
     flex: 10,
     width: '100%',
@@ -75,7 +65,6 @@ const styles = StyleSheet.create({
   },
   logoTop: {
     width,
-    marginTop: (StatusBar.currentHeight || 0) + 2,
     maxHeight: '58%',
     resizeMode: 'stretch',
   },
@@ -94,7 +83,7 @@ const styles = StyleSheet.create({
     width,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
   footerTextContainer: {
     paddingHorizontal: 10,

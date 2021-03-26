@@ -1,16 +1,15 @@
 import React from 'react';
 import * as _ from 'lodash';
 import {
-  SafeAreaView,
   StyleSheet,
   View,
   FlatList,
   TouchableOpacity,
   Linking,
-  Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -33,6 +32,7 @@ interface SelectProps {
 
 const Select: React.FC<SelectProps> = ({todaysMattal, setMattals}) => {
   const dispatch = useDispatch();
+  const {top} = useSafeAreaInsets();
   const [areas, setAreas] = React.useState<string[]>([]);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [alreadyFetched, setAlreadyFetched] = React.useState<boolean>(false);
@@ -63,7 +63,7 @@ const Select: React.FC<SelectProps> = ({todaysMattal, setMattals}) => {
   }, [areas, alreadyFetched]);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={{paddingTop: top}}>
       <View style={styles.container}>
         <View style={styles.header}>
           <View>
@@ -120,9 +120,9 @@ const Select: React.FC<SelectProps> = ({todaysMattal, setMattals}) => {
             />
           </>
         )}
+        <InfoModal isVisible={modalVisible} setModalVisible={setModalVisible} />
       </View>
-      <InfoModal isVisible={modalVisible} setModalVisible={setModalVisible} />
-    </SafeAreaView>
+    </View>
     //   <Text
     //   text="Fuhies - Dabouq - Abdoun - Jubieha - Dabouq - Abdoun - Jubieha"
     //   containerStyle={{
@@ -137,15 +137,10 @@ const Select: React.FC<SelectProps> = ({todaysMattal, setMattals}) => {
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
   header: {
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: Dimensions.get('window').height * 0.02,
     paddingBottom: 5,
     paddingHorizontal: 20,
     flexDirection: 'row',

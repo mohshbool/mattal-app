@@ -12,6 +12,7 @@ import {Colors} from '../Theme/Theme';
 import {Mattal} from '../types';
 import MattalHero from './MattalHero';
 import Select from './Select';
+import MoreComing from './MoreComing';
 
 const Home: React.FC = () => {
   const {selectedArea} = useSelector<RootState>(
@@ -69,9 +70,17 @@ const Home: React.FC = () => {
       initialPage={0}
       orientation="vertical">
       <Select todaysMattal={todaysMattal} setMattals={setMattals} />
-      {mattals?.map((mattal, i) => (
-        <MattalHero key={i} mattal={mattal} />
-      ))}
+      {mattals?.map((mattal, i) => {
+        if (i === mattals.length - 1) {
+          return (
+            <>
+              <MattalHero mattal={mattal} />
+              <MoreComing />
+            </>
+          );
+        }
+        return <MattalHero mattal={mattal} />;
+      })}
     </ViewPager>
   );
 };
