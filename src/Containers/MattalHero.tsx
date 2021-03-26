@@ -35,7 +35,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
 
   return (
     <View key={mattal._id} style={styles.container}>
-      <Swiper showsPagination={false}>
+      <Swiper showsPagination={false} loop={false}>
         {mattal.images.map((image, i) => (
           <>
             <Image
