@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
+import RNRestart from 'react-native-restart';
 import ViewPager from '@react-native-community/viewpager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -40,6 +41,7 @@ const Home: React.FC = () => {
         console.error(e.message);
         if (e.message === 'Request failed with status code 403') {
           AsyncStorage.clear();
+          RNRestart.Restart();
         }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,7 +58,7 @@ const Home: React.FC = () => {
       })
         .then((req) => {
           setMattals(req);
-          setTimeout(() => viewPager.current?.setPage(1), 500);
+          setTimeout(() => viewPager.current?.setPage(1), 150);
         })
         .catch((e) => console.error(e.message));
     }
