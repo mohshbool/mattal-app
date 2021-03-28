@@ -28,9 +28,14 @@ import {updateSelectedArea} from '../Action';
 interface SelectProps {
   todaysMattal?: Mattal;
   setMattals: any;
+  goToMattals: any;
 }
 
-const Select: React.FC<SelectProps> = ({todaysMattal, setMattals}) => {
+const Select: React.FC<SelectProps> = ({
+  todaysMattal,
+  setMattals,
+  goToMattals,
+}) => {
   const dispatch = useDispatch();
   const {top} = useSafeAreaInsets();
   const [areas, setAreas] = React.useState<string[]>([]);
@@ -116,7 +121,9 @@ const Select: React.FC<SelectProps> = ({todaysMattal, setMattals}) => {
               numColumns={2}
               contentContainerStyle={styles.list}
               keyExtractor={(item) => String(item.index)}
-              renderItem={({item}) => <AreaCard label={item.name} />}
+              renderItem={({item}) => (
+                <AreaCard label={item.name} goToMattals={goToMattals} />
+              )}
             />
           </>
         )}

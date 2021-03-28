@@ -27,6 +27,8 @@ const Home: React.FC = () => {
   const [mattals, setMattals] = React.useState<Mattal[] | undefined>([]);
   const [todaysMattal, setTodaysMattal] = React.useState<Mattal>();
 
+  const goToMattals = () => viewPager.current?.setPage(1);
+
   React.useEffect(() => {
     apiRequest<Mattal>({
       url: '/mattal/todays',
@@ -58,7 +60,7 @@ const Home: React.FC = () => {
       })
         .then((req) => {
           setMattals(req);
-          setTimeout(() => viewPager.current?.setPage(1), 150);
+          setTimeout(goToMattals, 150);
         })
         .catch((e) => console.error(e.message));
     }
@@ -71,7 +73,11 @@ const Home: React.FC = () => {
       style={styles.container}
       initialPage={0}
       orientation="vertical">
-      <Select todaysMattal={todaysMattal} setMattals={setMattals} />
+      <Select
+        goToMattals={goToMattals}
+        todaysMattal={todaysMattal}
+        setMattals={setMattals}
+      />
       {mattals?.map((mattal, i) => {
         if (i === mattals.length - 1) {
           return (
