@@ -7,10 +7,14 @@ import {
   Dimensions,
   Linking,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
 import Button from '../Components/Button';
+import HelpModal from '../Components/HelpModal';
 import Text from '../Components/Text';
 import {SERVER_URL} from '../Configs';
 import Fonts from '../Theme/Fonts';
@@ -29,6 +33,8 @@ function replace(array: any[], index: number, replacement: any) {
 }
 
 const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
+  const {top} = useSafeAreaInsets();
+  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [imageLoading, setImageLoading] = React.useState<boolean[]>(
     _.map(_.range(0, mattal.images.length), () => true),
   );
@@ -59,6 +65,15 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
           </>
         ))}
       </Swiper>
+      <View style={{top, ...styles.help}}>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Ionicon
+            name="ios-information-circle-outline"
+            size={Fonts.xxxl}
+            color={Colors.white}
+          />
+        </TouchableOpacity>
+      </View>
       <Text
         text={mattal.name}
         style={styles.name}
@@ -93,6 +108,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
         containerStyle={styles.buttonContainer}
         textStyle={styles.buttonText}
       />
+      <HelpModal isVisible={modalVisible} setModalVisible={setModalVisible} />
     </View>
   );
 };
@@ -113,6 +129,10 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     zIndex: -1,
+  },
+  help: {
+    position: 'absolute',
+    right: 10,
   },
   areaContainer: {
     position: 'absolute',

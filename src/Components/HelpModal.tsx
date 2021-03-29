@@ -1,0 +1,70 @@
+import React, {Dispatch, SetStateAction} from 'react';
+import {StyleSheet, View, Dimensions} from 'react-native';
+import Modal from 'react-native-modal';
+
+import Fonts from '../Theme/Fonts';
+import {Colors} from '../Theme/Theme';
+import Text from './Text';
+
+interface HelpModalProps {
+  isVisible: boolean;
+  setModalVisible: Dispatch<SetStateAction<boolean>>;
+}
+
+const HelpModal: React.FC<HelpModalProps> = ({isVisible, setModalVisible}) => {
+  const closeModal = () => setModalVisible(false);
+  return (
+    <Modal
+      isVisible={isVisible}
+      onBackButtonPress={closeModal}
+      onBackdropPress={closeModal}
+      onSwipeComplete={closeModal}
+      swipeDirection="up">
+      <View style={styles.outerContainer}>
+        <View style={styles.innerContainer}>
+          <Text
+            text="This page includes some critical information about the Mattal. You can swipe and down to see more Mattals in this area"
+            style={styles.headText}
+            containerStyle={styles.flex3}
+          />
+          <View style={{...styles.flex3, paddingVertical: 20}}>
+            <Text text="🍔: Restaurant nearby" style={styles.personName} />
+            <Text text="🍫: Supermarket nearby" style={styles.personName} />
+          </View>
+          <Text
+            text="The facilities we include are based on a one kilometer radius"
+            style={styles.infoText}
+            containerStyle={styles.flex1}
+          />
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+const styles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
+  flex3: {
+    flex: 3,
+  },
+  outerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  innerContainer: {
+    padding: 20,
+    borderRadius: 12,
+    width: '100%',
+    justifyContent: 'space-between',
+    height: Dimensions.get('screen').height * 0.5,
+    backgroundColor: Colors.background,
+  },
+  headText: {fontSize: Fonts.lg},
+  personName: {fontWeight: '600'},
+  infoText: {fontSize: Fonts.sm},
+});
+
+export default HelpModal;
