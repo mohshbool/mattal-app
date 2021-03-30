@@ -14,6 +14,7 @@ import {Mattal} from '../types';
 import MattalHero from './MattalHero';
 import Select from './Select';
 import MoreComing from './MoreComing';
+import {useDarkMode} from 'react-native-dynamic';
 
 const Home: React.FC = () => {
   const {selectedArea} = useSelector<RootState>(
@@ -23,6 +24,7 @@ const Home: React.FC = () => {
     (state) => state.Configs,
   ) as ConfigsReducer;
 
+  const dark = useDarkMode();
   const viewPager = React.useRef<ViewPager>(null);
   const [mattals, setMattals] = React.useState<Mattal[] | undefined>([]);
   const [todaysMattal, setTodaysMattal] = React.useState<Mattal>();
@@ -70,7 +72,10 @@ const Home: React.FC = () => {
   return (
     <ViewPager
       ref={viewPager}
-      style={styles.container}
+      style={[
+        styles.container,
+        {backgroundColor: dark ? Colors.primary : Colors.background},
+      ]}
       initialPage={0}
       orientation="vertical">
       <Select
@@ -100,7 +105,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.background,
   },
   whereYouAre: {
     color: Colors.primary,

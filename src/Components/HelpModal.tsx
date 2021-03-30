@@ -1,5 +1,6 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
+import {useDarkMode} from 'react-native-dynamic';
 import Modal from 'react-native-modal';
 
 import Fonts from '../Theme/Fonts';
@@ -12,6 +13,7 @@ interface HelpModalProps {
 }
 
 const HelpModal: React.FC<HelpModalProps> = ({isVisible, setModalVisible}) => {
+  const dark = useDarkMode();
   const closeModal = () => setModalVisible(false);
   return (
     <Modal
@@ -21,7 +23,11 @@ const HelpModal: React.FC<HelpModalProps> = ({isVisible, setModalVisible}) => {
       onSwipeComplete={closeModal}
       swipeDirection="up">
       <View style={styles.outerContainer}>
-        <View style={styles.innerContainer}>
+        <View
+          style={[
+            styles.innerContainer,
+            {backgroundColor: dark ? Colors.primary : Colors.white},
+          ]}>
           <Text
             text="This page includes some critical information about the Mattal. You can swipe and down to see more Mattals in this area"
             style={styles.headText}
@@ -60,7 +66,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     height: Dimensions.get('screen').height * 0.5,
-    backgroundColor: Colors.background,
   },
   headText: {fontSize: Fonts.lg},
   personName: {fontWeight: '600'},

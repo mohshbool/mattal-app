@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dynamic';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 
@@ -24,16 +25,23 @@ const Button: React.FC<ButtonProps> = ({
   containerStyle,
   textStyle,
 }) => {
+  const dark = useDarkMode();
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[
         styles.container,
         containerStyle,
+        {backgroundColor: dark ? Colors.secondary : Colors.primary},
         outlined ? styles.outlinedContainer : {},
       ]}>
       <Text
-        style={[styles.text, textStyle, outlined ? styles.outlinedText : {}]}>
+        style={[
+          styles.text,
+          textStyle,
+          {color: dark ? Colors.primary : Colors.secondary},
+          outlined ? styles.outlinedText : {},
+        ]}>
         {text}
       </Text>
     </TouchableOpacity>
@@ -49,7 +57,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.primary,
   },
   text: {
     textAlign: 'center',

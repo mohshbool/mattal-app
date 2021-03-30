@@ -6,6 +6,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dynamic';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 
@@ -21,9 +22,16 @@ const Text: React.FC<TextProps & TextProps> = ({
   containerStyle,
   ...props
 }) => {
+  const dark = useDarkMode();
   return (
     <View style={[styles.container, containerStyle]}>
-      <RNText style={[styles.text, style]} {...props}>
+      <RNText
+        style={[
+          {color: dark ? Colors.secondary : Colors.primary},
+          styles.text,
+          style,
+        ]}
+        {...props}>
         {text}
       </RNText>
     </View>
@@ -39,7 +47,6 @@ const styles = StyleSheet.create({
     fontSize: Fonts.lg,
     fontWeight: '500',
     paddingHorizontal: 8,
-    color: Colors.primary,
     fontFamily: Fonts.extrabold,
     letterSpacing: 0.001,
   },

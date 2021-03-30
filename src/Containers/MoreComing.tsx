@@ -9,10 +9,12 @@ import {RootState} from '../Reducer';
 import Text from '../Components/Text';
 import Fonts from '../Theme/Fonts';
 import Button from '../Components/Button';
+import {useDarkMode} from 'react-native-dynamic';
 
 const {width} = Dimensions.get('screen');
 
 const MoreComing: React.FC = () => {
+  const dark = useDarkMode();
   const {top} = useSafeAreaInsets();
   const {selectedArea} = useSelector<RootState>(
     (state) => state.Area,
@@ -20,9 +22,17 @@ const MoreComing: React.FC = () => {
 
   return (
     <View key={2123} style={{paddingTop: top}}>
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {backgroundColor: dark ? Colors.primary : Colors.background},
+        ]}>
         <Image
-          source={require('../Assets/Images/more-top.jpeg')}
+          source={
+            dark
+              ? require('../Assets/Images/more-top.dark.jpg')
+              : require('../Assets/Images/more-top.jpg')
+          }
           style={styles.logoTop}
         />
         <Text
@@ -31,13 +41,13 @@ const MoreComing: React.FC = () => {
           containerStyle={{...styles.noFlex, ...styles.bigTextContainer}}
         />
         <Image
-          source={require('../Assets/Images/more-bottom.jpeg')}
+          source={require('../Assets/Images/more-bottom.jpg')}
           style={styles.logoBottom}
         />
       </View>
       <View style={styles.footer}>
         <Text
-          text="Have a Mattal that you'd like to be on our app?"
+          text="Have a Mattal that you'd like to share?"
           containerStyle={{...styles.noFlex, ...styles.footerTextContainer}}
           style={styles.footerText}
         />
@@ -61,7 +71,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: Colors.background,
   },
   logoTop: {
     width,
@@ -91,6 +100,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: Fonts.sm,
+    paddingBottom: 6,
   },
   footerButton: {
     paddingHorizontal: 8,

@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -33,6 +34,7 @@ function replace(array: any[], index: number, replacement: any) {
 }
 
 const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
+  const dark = useDarkMode();
   const {top} = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [imageLoading, setImageLoading] = React.useState<boolean[]>(
@@ -58,7 +60,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
             {imageLoading[i] && (
               <ActivityIndicator
                 size="large"
-                color={Colors.primary}
+                color={dark ? Colors.secondary : Colors.primary}
                 style={styles.loader}
               />
             )}
@@ -160,7 +162,6 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
   supermarket: {
-    color: Colors.white,
     fontWeight: '500',
     fontSize: Fonts.xl,
   },
@@ -170,7 +171,6 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
   food: {
-    color: Colors.white,
     fontWeight: '500',
     fontSize: Fonts.xl,
   },

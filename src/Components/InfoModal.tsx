@@ -14,6 +14,7 @@ import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 import Text from './Text';
+import {useDarkMode} from 'react-native-dynamic';
 
 interface InfoModalProps {
   isVisible: boolean;
@@ -21,6 +22,7 @@ interface InfoModalProps {
 }
 
 const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
+  const dark = useDarkMode();
   const closeModal = () => setModalVisible(false);
   return (
     <Modal
@@ -30,7 +32,11 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
       onSwipeComplete={closeModal}
       swipeDirection="up">
       <View style={styles.outerContainer}>
-        <View style={styles.innerContainer}>
+        <View
+          style={[
+            styles.innerContainer,
+            {backgroundColor: dark ? Colors.primary : Colors.white},
+          ]}>
           <Text
             text="Mattal is a cross-platform application developed with ❤️ in Jordan by university students"
             style={styles.headText}
@@ -47,7 +53,7 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
                   <Ionicon
                     name="ios-mail-outline"
                     size={Fonts.xxxl}
-                    color={Colors.primary}
+                    color={dark ? Colors.secondary : Colors.primary}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -57,7 +63,7 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
                   <Ionicon
                     name="ios-logo-instagram"
                     size={Fonts.xxxl}
-                    color={Colors.primary}
+                    color={dark ? Colors.secondary : Colors.primary}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -67,7 +73,7 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
                   <FeatherIcon
                     name="github"
                     size={Fonts.xxxl}
-                    color={Colors.primary}
+                    color={dark ? Colors.secondary : Colors.primary}
                   />
                 </TouchableOpacity>
               </View>
@@ -82,7 +88,7 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
                   <Ionicon
                     name="ios-mail-outline"
                     size={Fonts.xxxl}
-                    color={Colors.primary}
+                    color={dark ? Colors.secondary : Colors.primary}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -94,7 +100,7 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
                   <Ionicon
                     name="ios-logo-instagram"
                     size={Fonts.xxxl}
-                    color={Colors.primary}
+                    color={dark ? Colors.secondary : Colors.primary}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -106,7 +112,7 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
                   <SimpleLineIcon
                     name="social-facebook"
                     size={Fonts.xxxl}
-                    color={Colors.primary}
+                    color={dark ? Colors.secondary : Colors.primary}
                   />
                 </TouchableOpacity>
               </View>
@@ -130,7 +136,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: '100%',
     height: Dimensions.get('screen').height * 0.6,
-    backgroundColor: Colors.white,
     paddingTop: 30,
     paddingBottom: 20,
   },

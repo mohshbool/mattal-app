@@ -10,6 +10,7 @@ import {apiRequest} from '../API';
 import {RootStackParamList} from '../App';
 import {RootState} from '../Reducer';
 import {CreateDeviceResponse} from '../API/types';
+import {useDarkMode} from 'react-native-dynamic';
 
 type SplashScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -21,6 +22,7 @@ interface SplashProps {
 }
 
 const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
+  const dark = useDarkMode();
   const dispatch = useDispatch();
   const {fcm_token} = useSelector<RootState>(
     (state) => state.Configs,
@@ -87,7 +89,11 @@ const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
         opacity: LogoFadeIn,
       }}>
       <Image
-        source={require('../Assets/Images/splash.jpeg')}
+        source={
+          dark
+            ? require('../Assets/Images/splash.dark.jpg')
+            : require('../Assets/Images/splash.jpg')
+        }
         style={{width: '100%', height: '100%'}}
       />
     </Animated.View>

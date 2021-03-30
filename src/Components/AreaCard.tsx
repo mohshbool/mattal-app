@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dynamic';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {updateSelectedArea} from '../Action';
@@ -15,17 +16,25 @@ interface AreaCardProps {
 }
 
 const AreaCard: React.FC<AreaCardProps> = ({label, goToMattals}) => {
+  const dark = useDarkMode();
   const dispatch = useDispatch();
   const {selectedArea} = useSelector<RootState>(
     (state) => state.Area,
   ) as AreaReducer;
 
   return (
-    <View style={styles.border}>
+    <View
+      style={[
+        styles.border,
+        {borderColor: dark ? Colors.secondary : Colors.primary},
+      ]}>
       <TouchableOpacity
         onPress={() => {
-          if (label == selectedArea) goToMattals();
-          else dispatch(updateSelectedArea(label));
+          if (label === selectedArea) {
+            goToMattals();
+          } else {
+            dispatch(updateSelectedArea(label));
+          }
         }}>
         <Text
           text={label}
@@ -51,11 +60,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 0,
     paddingVertical: 25,
-    borderBottomColor: Colors.primary,
   },
   text: {
     textAlign: 'center',
-    color: Colors.primary,
     fontFamily: Fonts.regular,
   },
 });

@@ -24,6 +24,7 @@ import InfoModal from '../Components/InfoModal';
 import Button from '../Components/Button';
 import {Mattal} from '../types';
 import {updateSelectedArea} from '../Action';
+import {useDarkMode} from 'react-native-dynamic';
 
 interface SelectProps {
   todaysMattal?: Mattal;
@@ -37,6 +38,7 @@ const Select: React.FC<SelectProps> = ({
   goToMattals,
 }) => {
   const dispatch = useDispatch();
+  const dark = useDarkMode();
   const {top} = useSafeAreaInsets();
   const [areas, setAreas] = React.useState<string[]>([]);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
@@ -69,7 +71,11 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <View style={{paddingTop: top}}>
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {backgroundColor: dark ? Colors.primary : Colors.background},
+        ]}>
         <View style={styles.header}>
           <View>
             <TouchableOpacity
@@ -79,7 +85,7 @@ const Select: React.FC<SelectProps> = ({
               <Ionicon
                 name="ios-logo-instagram"
                 size={Fonts.xxxl}
-                color={Colors.primary}
+                color={dark ? Colors.secondary : Colors.primary}
               />
             </TouchableOpacity>
           </View>
@@ -91,7 +97,7 @@ const Select: React.FC<SelectProps> = ({
               <Ionicon
                 name="ios-information-circle-outline"
                 size={Fonts.xxxl}
-                color={Colors.primary}
+                color={dark ? Colors.secondary : Colors.primary}
               />
             </TouchableOpacity>
           </View>
@@ -99,7 +105,7 @@ const Select: React.FC<SelectProps> = ({
         {!todaysMattal || !areas ? (
           <ActivityIndicator
             size="large"
-            color={Colors.primary}
+            color={dark ? Colors.secondary : Colors.primary}
             style={styles.loader}
           />
         ) : (
@@ -163,7 +169,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     alignItems: 'center',
-    backgroundColor: Colors.background,
   },
   todaysText: {
     fontSize: Fonts.sm,
