@@ -41,7 +41,11 @@ const MoreComing: React.FC = () => {
           containerStyle={{...styles.noFlex, ...styles.bigTextContainer}}
         />
         <Image
-          source={require('../Assets/Images/more-bottom.jpg')}
+          source={
+            dark
+              ? require('../Assets/Images/more-bottom.dark.jpg')
+              : require('../Assets/Images/more-bottom.jpg')
+          }
           style={styles.logoBottom}
         />
       </View>

@@ -13,11 +13,14 @@ import {useDarkMode} from 'react-native-dynamic';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import {useSelector} from 'react-redux';
 
+import {ConfigsReducer} from '../Action/types';
 import Button from '../Components/Button';
 import HelpModal from '../Components/HelpModal';
 import Text from '../Components/Text';
-import {SERVER_URL} from '../Configs';
+import {API_URL, API_VERSION} from '../Configs';
+import {RootState} from '../Reducer';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 import {Mattal} from '../types';
@@ -40,6 +43,9 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
   const [imageLoading, setImageLoading] = React.useState<boolean[]>(
     _.map(_.range(0, mattal.images.length), () => true),
   );
+  const {fcm_token} = useSelector<RootState>(
+    (state) => state.Configs,
+  ) as ConfigsReducer;
 
   return (
     <View key={mattal._id} style={styles.container}>
@@ -49,7 +55,10 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
             <Image
               style={styles.image}
               source={{
-                uri: `${SERVER_URL}/public/${image.filename}`,
+                uri: `${API_URL}/${API_VERSION}/upload/${image.filename}`,
+                headers: {
+                  Authorization: `Bearer ${fcm_token}`,
+                },
               }}
               onLoadStart={() =>
                 setImageLoading(replace(imageLoading, i, true))
