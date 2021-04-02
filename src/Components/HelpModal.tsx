@@ -38,7 +38,7 @@ const HelpModal: React.FC<HelpModalProps> = ({isVisible, setModalVisible}) => {
             <Text text="🍫: Supermarket nearby" style={styles.personName} />
           </View>
           <Text
-            text="The facilities we include are based on a one kilometer radius"
+            text="The facilities we include are based on a one kilometer radius. A ten-minute walk or a three-minute drive at most"
             style={styles.infoText}
             containerStyle={styles.flex1}
           />

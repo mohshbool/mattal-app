@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   Image,
   StyleSheet,
@@ -9,11 +9,12 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Swiper from 'react-native-swiper';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
+import Swiper from 'react-native-swiper';
+import {useDarkMode} from 'react-native-dynamic';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import {Notification} from 'react-native-in-app-message';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {ConfigsReducer} from '../Action/types';
 import Button from '../Components/Button';
@@ -39,13 +40,18 @@ function replace(array: any[], index: number, replacement: any) {
 const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
   const dark = useDarkMode();
   const {top} = useSafeAreaInsets();
+  const notificationRef = useRef(null);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+  const [emoji, setEmoji] = React.useState<'Supermarket' | 'Restaurant'>();
   const [imageLoading, setImageLoading] = React.useState<boolean[]>(
     _.map(_.range(0, mattal.images.length), () => true),
   );
   const {fcm_token} = useSelector<RootState>(
     (state) => state.Configs,
   ) as ConfigsReducer;
+
+  // @ts-ignore
+  const showNotification = () => notificationRef?.current?.show();
 
   return (
     <View key={mattal._id} style={styles.container}>
@@ -96,21 +102,33 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
         containerStyle={styles.nameContainer}
       />
       {mattal.facilities.supermarket && (
-        <Text
-          text={'🍫'}
-          style={styles.supermarket}
-          containerStyle={styles.supermarketContainer}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            setEmoji('Supermarket');
+            showNotification();
+          }}>
+          <Text
+            text={'🍫'}
+            style={styles.supermarket}
+            containerStyle={styles.supermarketContainer}
+          />
+        </TouchableOpacity>
       )}
       {mattal.facilities.food && (
-        <Text
-          text={'🍔'}
-          style={styles.food}
-          containerStyle={{
-            ...styles.foodContainer,
-            right: mattal.facilities.supermarket ? 50 : 12,
-          }}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            setEmoji('Restaurant');
+            showNotification();
+          }}>
+          <Text
+            text={'🍔'}
+            style={styles.food}
+            containerStyle={{
+              ...styles.foodContainer,
+              right: mattal.facilities.supermarket ? 50 : 12,
+            }}
+          />
+        </TouchableOpacity>
       )}
       <Button
         text="Take me to the Mattal"
@@ -120,6 +138,13 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
         textStyle={styles.buttonText}
       />
       <HelpModal isVisible={modalVisible} setModalVisible={setModalVisible} />
+      <Notification
+        duration={1500}
+        ref={notificationRef}
+        textColor={dark ? Colors.white : Colors.primary}
+        blurType={dark ? 'dark' : 'xlight'}
+        text={`${emoji === 'Supermarket' ? '🍫' : '🍔'} ${emoji} Nearby`}
+      />
     </View>
   );
 };
