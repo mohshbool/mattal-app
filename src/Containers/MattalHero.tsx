@@ -28,6 +28,7 @@ import {Mattal} from '../types';
 interface MattalHeroProps {
   mattal: Mattal;
   setEmoji: any;
+  backToTop: any;
   notificationRef: any;
 }
 
@@ -41,6 +42,7 @@ function replace(array: any[], index: number, replacement: any) {
 const MattalHero: React.FC<MattalHeroProps> = ({
   mattal,
   setEmoji,
+  backToTop,
   notificationRef,
 }) => {
   const dark = useDarkMode();
@@ -93,6 +95,15 @@ const MattalHero: React.FC<MattalHeroProps> = ({
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Ionicon
             name="ios-information-circle-outline"
+            size={Fonts.xxxl}
+            color={Colors.white}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={{top, ...styles.backToTop}}>
+        <TouchableOpacity onPress={() => backToTop()}>
+          <Ionicon
+            name="chevron-up-outline"
             size={Fonts.xxxl}
             color={Colors.white}
           />
@@ -168,7 +179,11 @@ const styles = StyleSheet.create({
   },
   help: {
     position: 'absolute',
-    right: 12,
+    right: 15,
+  },
+  backToTop: {
+    position: 'absolute',
+    left: 15,
   },
   areaContainer: {
     position: 'absolute',

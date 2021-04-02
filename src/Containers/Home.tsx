@@ -32,6 +32,7 @@ const Home: React.FC = () => {
   const [mattals, setMattals] = React.useState<Mattal[] | undefined>([]);
   const [todaysMattal, setTodaysMattal] = React.useState<Mattal>();
 
+  const backToTop = () => viewPager.current?.setPage(0);
   const goToMattals = () => viewPager.current?.setPage(1);
 
   React.useEffect(() => {
@@ -101,6 +102,7 @@ const Home: React.FC = () => {
                 <MattalHero
                   mattal={mattal}
                   setEmoji={setEmoji}
+                  backToTop={backToTop}
                   notificationRef={notificationRef}
                 />
                 <MoreComing />
@@ -111,6 +113,7 @@ const Home: React.FC = () => {
             <MattalHero
               mattal={mattal}
               setEmoji={setEmoji}
+              backToTop={backToTop}
               notificationRef={notificationRef}
             />
           );
