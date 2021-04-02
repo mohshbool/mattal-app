@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import RNRestart from 'react-native-restart';
+import {Notification} from 'react-native-in-app-message';
 import ViewPager from '@react-native-community/viewpager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -26,6 +27,8 @@ const Home: React.FC = () => {
 
   const dark = useDarkMode();
   const viewPager = React.useRef<ViewPager>(null);
+  const notificationRef = React.useRef(null);
+  const [emoji, setEmoji] = React.useState<'Supermarket' | 'Restaurant'>();
   const [mattals, setMattals] = React.useState<Mattal[] | undefined>([]);
   const [todaysMattal, setTodaysMattal] = React.useState<Mattal>();
 
@@ -70,31 +73,50 @@ const Home: React.FC = () => {
   }, [selectedArea]);
 
   return (
-    <ViewPager
-      ref={viewPager}
-      style={[
-        styles.container,
-        {backgroundColor: dark ? Colors.primary : Colors.background},
-      ]}
-      initialPage={0}
-      orientation="vertical">
-      <Select
-        goToMattals={goToMattals}
-        todaysMattal={todaysMattal}
-        setMattals={setMattals}
+    <>
+      <Notification
+        duration={1500}
+        ref={notificationRef}
+        textColor={dark ? Colors.white : Colors.primary}
+        blurType={dark ? 'dark' : 'xlight'}
+        text={`${emoji === 'Supermarket' ? '🍫' : '🍔'} ${emoji} Nearby`}
       />
-      {mattals?.map((mattal, i) => {
-        if (i === mattals.length - 1) {
+      <ViewPager
+        ref={viewPager}
+        style={[
+          styles.container,
+          {backgroundColor: dark ? Colors.primary : Colors.background},
+        ]}
+        initialPage={0}
+        orientation="vertical">
+        <Select
+          goToMattals={goToMattals}
+          todaysMattal={todaysMattal}
+          setMattals={setMattals}
+        />
+        {mattals?.map((mattal, i) => {
+          if (i === mattals.length - 1) {
+            return (
+              <>
+                <MattalHero
+                  mattal={mattal}
+                  setEmoji={setEmoji}
+                  notificationRef={notificationRef}
+                />
+                <MoreComing />
+              </>
+            );
+          }
           return (
-            <>
-              <MattalHero mattal={mattal} />
-              <MoreComing />
-            </>
+            <MattalHero
+              mattal={mattal}
+              setEmoji={setEmoji}
+              notificationRef={notificationRef}
+            />
           );
-        }
-        return <MattalHero mattal={mattal} />;
-      })}
-    </ViewPager>
+        })}
+      </ViewPager>
+    </>
   );
 };
 

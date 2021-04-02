@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useRef} from 'react';
+import React from 'react';
 import {
   Image,
   StyleSheet,
@@ -13,7 +13,6 @@ import {useSelector} from 'react-redux';
 import Swiper from 'react-native-swiper';
 import {useDarkMode} from 'react-native-dynamic';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import {Notification} from 'react-native-in-app-message';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {ConfigsReducer} from '../Action/types';
@@ -28,6 +27,8 @@ import {Mattal} from '../types';
 
 interface MattalHeroProps {
   mattal: Mattal;
+  setEmoji: any;
+  notificationRef: any;
 }
 
 function replace(array: any[], index: number, replacement: any) {
@@ -37,12 +38,14 @@ function replace(array: any[], index: number, replacement: any) {
     .concat(array.slice(index + 1));
 }
 
-const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
+const MattalHero: React.FC<MattalHeroProps> = ({
+  mattal,
+  setEmoji,
+  notificationRef,
+}) => {
   const dark = useDarkMode();
   const {top} = useSafeAreaInsets();
-  const notificationRef = useRef(null);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
-  const [emoji, setEmoji] = React.useState<'Supermarket' | 'Restaurant'>();
   const [imageLoading, setImageLoading] = React.useState<boolean[]>(
     _.map(_.range(0, mattal.images.length), () => true),
   );
@@ -55,7 +58,11 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
 
   return (
     <View key={mattal._id} style={styles.container}>
-      <Swiper showsPagination={false} loop={false}>
+      <Swiper
+        paginationStyle={styles.paginationStyle}
+        activeDotColor={Colors.white}
+        dotColor={Colors.primary}
+        loop={false}>
         {mattal.images.map((image, i) => (
           <>
             <Image
@@ -131,20 +138,13 @@ const MattalHero: React.FC<MattalHeroProps> = ({mattal}) => {
         </TouchableOpacity>
       )}
       <Button
+        outlined
         text="Take me to the Mattal"
         onPress={() => Linking.openURL(mattal.maps_url)}
-        outlined
         containerStyle={styles.buttonContainer}
         textStyle={styles.buttonText}
       />
       <HelpModal isVisible={modalVisible} setModalVisible={setModalVisible} />
-      <Notification
-        duration={1500}
-        ref={notificationRef}
-        textColor={dark ? Colors.white : Colors.primary}
-        blurType={dark ? 'dark' : 'xlight'}
-        text={`${emoji === 'Supermarket' ? '🍫' : '🍔'} ${emoji} Nearby`}
-      />
     </View>
   );
 };
@@ -168,12 +168,12 @@ const styles = StyleSheet.create({
   },
   help: {
     position: 'absolute',
-    right: 10,
+    right: 12,
   },
   areaContainer: {
     position: 'absolute',
     left: 12,
-    bottom: 120,
+    bottom: 125,
   },
   name: {
     color: Colors.white,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   nameContainer: {
     position: 'absolute',
     left: 12,
-    bottom: 90,
+    bottom: 95,
   },
   area: {
     color: Colors.white,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   supermarketContainer: {
     position: 'absolute',
     right: 12,
-    bottom: 40,
+    bottom: 45,
   },
   supermarket: {
     fontWeight: '500',
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   foodContainer: {
     position: 'absolute',
     right: 50,
-    bottom: 40,
+    bottom: 45,
   },
   food: {
     fontWeight: '500',
@@ -211,13 +211,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: 35,
+    bottom: 40,
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,
   },
   buttonText: {
     fontSize: Fonts.md,
+  },
+  paginationStyle: {
+    bottom: 20,
   },
 });
 
