@@ -11,6 +11,7 @@ import {RootStackParamList} from '../App';
 import {RootState} from '../Reducer';
 import {CreateDeviceResponse} from '../API/types';
 import {useDarkMode} from 'react-native-dynamic';
+import {getDeviceName} from 'react-native-device-info';
 
 type SplashScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -37,11 +38,15 @@ const Splash: React.FC<SplashProps> = ({navigation: {replace}}) => {
         .then(() => {
           messaging()
             .getToken()
-            .then((firebase_token) => {
+            .then(async (firebase_token) => {
               apiRequest<CreateDeviceResponse>({
                 url: '/device/create',
                 method: 'POST',
-                data: {fcm_token: firebase_token, os: Platform.OS},
+                data: {
+                  fcm_token: firebase_token,
+                  os: Platform.OS,
+                  name: await getDeviceName(),
+                },
               })
                 .then((req) => {
                   dispatch(updateConfigs({fcm_token: req.fcm_token}));
