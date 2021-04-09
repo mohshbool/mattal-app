@@ -7,6 +7,7 @@ import {
   Dimensions,
   Linking,
   ActivityIndicator,
+  Platform,
   TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
   areaContainer: {
     position: 'absolute',
     left: 12,
-    bottom: 125,
+    bottom: Platform.select({ios: 125, android: 170}),
   },
   name: {
     color: Colors.white,
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
   nameContainer: {
     position: 'absolute',
     left: 12,
-    bottom: 95,
+    bottom: Platform.select({ios: 95, android: 140}),
   },
   area: {
     color: Colors.white,
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
   supermarketContainer: {
     position: 'absolute',
     right: 12,
-    bottom: 45,
+    bottom: Platform.select({ios: 45, android: 100}),
   },
   supermarket: {
     fontWeight: '500',
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
   foodContainer: {
     position: 'absolute',
     right: 50,
-    bottom: 45,
+    bottom: Platform.select({ios: 45, android: 100}),
   },
   food: {
     fontWeight: '500',
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: 40,
+    bottom: Platform.select({ios: 40, android: 90}),
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     fontSize: Fonts.md,
   },
   paginationStyle: {
-    bottom: 20,
+    bottom: Platform.select({ios: 17, android: 45}),
   },
 });
 
