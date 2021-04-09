@@ -31,16 +31,16 @@ const Button: React.FC<ButtonProps> = ({
       onPress={onPress}
       style={[
         styles.container,
-        containerStyle,
         {backgroundColor: dark ? Colors.secondary : Colors.primary},
         outlined ? styles.outlinedContainer : {},
+        containerStyle,
       ]}>
       <Text
         style={[
           styles.text,
-          textStyle,
           {color: dark ? Colors.primary : Colors.secondary},
           outlined ? styles.outlinedText : {},
+          textStyle,
         ]}>
         {text}
       </Text>
