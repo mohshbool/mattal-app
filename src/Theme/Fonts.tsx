@@ -25,6 +25,7 @@ export default {
   xl: normalize(22),
   xxl: normalize(24),
   xxxl: normalize(28),
+  xxxxl: normalize(30),
   thing: 'Montserrat-Thin',
   regular: 'Montserrat-Regular',
   bold: 'Montserrat-Bold',
