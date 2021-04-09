@@ -24,6 +24,7 @@ import {RootState} from '../Reducer';
 import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 import {Mattal} from '../types';
+import RatingModal from '../Components/RatingModal';
 
 interface MattalHeroProps {
   mattal: Mattal;
@@ -48,6 +49,9 @@ const MattalHero: React.FC<MattalHeroProps> = ({
   const dark = useDarkMode();
   const {top} = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+  const [ratingModalVisible, setRatingModalVisible] = React.useState<boolean>(
+    false,
+  );
   const [imageLoading, setImageLoading] = React.useState<boolean[]>(
     _.map(_.range(0, mattal.images.length), () => true),
   );
@@ -92,6 +96,15 @@ const MattalHero: React.FC<MattalHeroProps> = ({
         ))}
       </Swiper>
       <View style={{top, ...styles.help}}>
+        <TouchableOpacity onPress={() => setRatingModalVisible(true)}>
+          <Ionicon
+            name="ios-star"
+            size={Fonts.xxxxl}
+            color={Colors.secondary}
+          />
+        </TouchableOpacity>
+      </View>
+      {/* <View style={{top, ...styles.help}}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Ionicon
             name="ios-information-circle-outline"
@@ -99,7 +112,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
             color={Colors.white}
           />
         </TouchableOpacity>
-      </View>
+      </View> */}
       <View style={{top, ...styles.backToTop}}>
         <TouchableOpacity onPress={() => backToTop()}>
           <Ionicon
@@ -156,6 +169,10 @@ const MattalHero: React.FC<MattalHeroProps> = ({
         textStyle={styles.buttonText}
       />
       <HelpModal isVisible={modalVisible} setModalVisible={setModalVisible} />
+      <RatingModal
+        isVisible={ratingModalVisible}
+        setModalVisible={setRatingModalVisible}
+      />
     </View>
   );
 };
@@ -222,6 +239,14 @@ const styles = StyleSheet.create({
   food: {
     fontWeight: '500',
     fontSize: Fonts.xl,
+  },
+  rate: {
+    position: 'absolute',
+    right: 15,
+    bottom: 90,
+    paddingVertical: 5,
+    paddingHorizontal: 0,
+    borderRadius: 8,
   },
   buttonContainer: {
     position: 'absolute',
