@@ -1,10 +1,8 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import RNRestart from 'react-native-restart';
 import {Notification} from 'react-native-in-app-message';
 import ViewPager from '@react-native-community/viewpager';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AreaReducer, ConfigsReducer} from '../Action/types';
 import {apiRequest} from '../API';
@@ -38,19 +36,12 @@ const Home: React.FC = () => {
   React.useEffect(() => {
     apiRequest<Mattal>({
       url: '/mattal/todays',
-      headers: {
-        Authorization: `Bearer ${fcm_token}`,
-      },
     })
       .then((req) => {
         setTodaysMattal(req);
       })
       .catch((e) => {
         console.error(e.message);
-        if (e.message === 'Request failed with status code 403') {
-          AsyncStorage.clear();
-          RNRestart.Restart();
-        }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -65,6 +56,7 @@ const Home: React.FC = () => {
         },
       })
         .then((req) => {
+          console.log(req);
           setMattals(req);
           setTimeout(goToMattals, 150);
         })

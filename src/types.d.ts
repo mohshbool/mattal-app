@@ -15,6 +15,8 @@ export interface Mattal {
   is_todays_pick: boolean;
   last_todays_pick: string;
   created_at: string;
+  rating: number;
+  ratedByDevice: boolean;
 }
 
 export interface Facilities {

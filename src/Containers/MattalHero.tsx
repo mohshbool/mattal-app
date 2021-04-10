@@ -14,6 +14,7 @@ import Swiper from 'react-native-swiper';
 import {useDarkMode} from 'react-native-dynamic';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {ConfigsReducer} from '../Action/types';
 import Button from '../Components/Button';
@@ -25,6 +26,7 @@ import Fonts from '../Theme/Fonts';
 import {Colors} from '../Theme/Theme';
 import {Mattal} from '../types';
 import RatingModal from '../Components/RatingModal';
+import {apiRequest} from '../API';
 
 interface MattalHeroProps {
   mattal: Mattal;
@@ -48,6 +50,8 @@ const MattalHero: React.FC<MattalHeroProps> = ({
 }) => {
   const dark = useDarkMode();
   const {top} = useSafeAreaInsets();
+  const [rating, setRating] = React.useState<number>(0);
+  const [hasRated, setHasRated] = React.useState<boolean>(mattal.ratedByDevice);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [ratingModalVisible, setRatingModalVisible] = React.useState<boolean>(
     false,
@@ -58,6 +62,30 @@ const MattalHero: React.FC<MattalHeroProps> = ({
   const {fcm_token} = useSelector<RootState>(
     (state) => state.Configs,
   ) as ConfigsReducer;
+
+  const ratingSubmit = async () => {
+    await apiRequest({
+      url: '/review/mattal',
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${fcm_token}`,
+      },
+      data: {
+        mattal: mattal._id,
+        rating: rating,
+      },
+    })
+      .then(() => {
+        setRatingModalVisible(false);
+        setHasRated(true);
+      })
+      .catch((e) => {
+        console.error(e.message);
+        if (e.message === 'Request failed with status code 403') {
+          AsyncStorage.clear();
+        }
+      });
+  };
 
   // @ts-ignore
   const showNotification = () => notificationRef?.current?.show();
@@ -95,12 +123,14 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           </>
         ))}
       </Swiper>
-      <View style={{top, ...styles.help}}>
-        <TouchableOpacity onPress={() => setRatingModalVisible(true)}>
+      <View style={{top, ...styles.rateStar}}>
+        <TouchableOpacity
+          onPress={() => setRatingModalVisible(true)}
+          disabled={hasRated}>
           <Ionicon
             name="ios-star"
             size={Fonts.xxxxl}
-            color={Colors.secondary}
+            color={hasRated ? Colors.primary : Colors.secondary}
           />
         </TouchableOpacity>
       </View>
@@ -131,6 +161,11 @@ const MattalHero: React.FC<MattalHeroProps> = ({
         text={mattal.area}
         style={styles.area}
         containerStyle={styles.nameContainer}
+      />
+      <Text
+        text={'⭐ ' + mattal.rating.toString()}
+        style={styles.rateText}
+        containerStyle={styles.ratingContainer}
       />
       {mattal.facilities.supermarket && (
         <TouchableOpacity
@@ -172,6 +207,9 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       <RatingModal
         isVisible={ratingModalVisible}
         setModalVisible={setRatingModalVisible}
+        rating={rating}
+        setRating={setRating}
+        ratingSubmit={ratingSubmit}
       />
     </View>
   );
@@ -194,7 +232,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: -1,
   },
-  help: {
+  rateStar: {
     position: 'absolute',
     right: 15,
   },
@@ -240,10 +278,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: Fonts.xl,
   },
-  rate: {
+  rateText: {
+    fontSize: Fonts.l,
+  },
+  ratingContainer: {
     position: 'absolute',
-    right: 15,
-    bottom: 90,
+    right: 20,
+    bottom: 80,
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,

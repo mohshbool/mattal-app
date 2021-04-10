@@ -11,13 +11,20 @@ import Button from './Button';
 interface RatingModalProps {
   isVisible: boolean;
   setModalVisible: Dispatch<SetStateAction<boolean>>;
+  rating: number;
+  setRating: Dispatch<SetStateAction<number>>;
+  ratingSubmit: () => void;
 }
 
 const RatingModal: React.FC<RatingModalProps> = ({
   isVisible,
   setModalVisible,
+  ratingSubmit,
+  rating,
+  setRating,
 }) => {
-  const dark = !useDarkMode();
+  const dark = useDarkMode();
+  const [disabled, setDisabled] = React.useState<boolean>(true);
   const closeModal = () => setModalVisible(false);
   return (
     <Modal
@@ -30,7 +37,10 @@ const RatingModal: React.FC<RatingModalProps> = ({
         <View
           style={[
             styles.innerContainer,
-            {backgroundColor: dark ? Colors.primary : Colors.white},
+            {
+              backgroundColor: dark ? Colors.primary : Colors.white,
+              height: Dimensions.get('screen').height * (disabled ? 0.2 : 0.27),
+            },
           ]}>
           <AirbnbRating
             count={5}
@@ -38,23 +48,32 @@ const RatingModal: React.FC<RatingModalProps> = ({
             showRating
             // @ts-ignore
             reviewSize={30}
-            // reviews={[]}
-            defaultRating={0}
-            onFinishRating={() => setTimeout(closeModal, 1000)}
+            defaultRating={rating}
+            onFinishRating={(_rating) => {
+              setRating(_rating);
+              setDisabled(false);
+            }}
             selectedColor={dark ? Colors.secondary : Colors.primary}
             unSelectedColor={dark ? Colors.white : Colors.background}
             reviewColor={dark ? Colors.secondary : Colors.primary}
           />
           <Button
             text="Rate"
-            onPress={closeModal}
+            disabled={disabled}
+            onPress={ratingSubmit}
             containerStyle={{
               ...styles.rateContainer,
-              backgroundColor: dark ? Colors.secondary : Colors.primary,
+              backgroundColor: dark
+                ? disabled
+                  ? Colors.primary
+                  : Colors.secondary
+                : disabled
+                ? Colors.white
+                : Colors.primary,
             }}
             textStyle={{
               ...styles.rateText,
-              color: dark ? Colors.primary : Colors.secondary,
+              color: dark ? Colors.primary : Colors.white,
             }}
           />
         </View>
@@ -80,7 +99,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: '100%',
     justifyContent: 'space-between',
-    height: Dimensions.get('screen').height * 0.27,
   },
   rateContainer: {
     height: 45,
