@@ -10,14 +10,11 @@ import {
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {apiRequest} from '../API';
 import AreaCard from '../Components/AreaCard';
 import {Colors} from '../Theme/Theme';
-import {ConfigsReducer} from '../Action/types';
-import {RootState} from '../Reducer';
 import Text from '../Components/Text';
 import Fonts from '../Theme/Fonts';
 import InfoModal from '../Components/InfoModal';
@@ -43,17 +40,11 @@ const Select: React.FC<SelectProps> = ({
   const [areas, setAreas] = React.useState<string[]>([]);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [alreadyFetched, setAlreadyFetched] = React.useState<boolean>(false);
-  const {fcm_token} = useSelector<RootState>(
-    (state) => state.Configs,
-  ) as ConfigsReducer;
 
   React.useEffect(() => {
     if (areas.length === 0 && !alreadyFetched) {
       apiRequest<string[]>({
         url: '/mattal/areas',
-        headers: {
-          Authorization: `Bearer ${fcm_token}`,
-        },
       })
         .then((req) => {
           setAreas(req);
@@ -61,9 +52,6 @@ const Select: React.FC<SelectProps> = ({
         })
         .catch((e) => {
           console.error(e.message);
-          if (e.message === 'Request failed with status code 403') {
-            AsyncStorage.clear();
-          }
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
