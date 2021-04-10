@@ -16,6 +16,7 @@ interface ButtonProps {
   outlined?: boolean;
   containerStyle?: ViewStyle;
   textStyle?: TextStyle;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,11 +25,13 @@ const Button: React.FC<ButtonProps> = ({
   outlined,
   containerStyle,
   textStyle,
+  disabled,
 }) => {
   const dark = useDarkMode();
   return (
     <TouchableOpacity
       onPress={onPress}
+      disabled={disabled || false}
       style={[
         styles.container,
         {backgroundColor: dark ? Colors.secondary : Colors.primary},
