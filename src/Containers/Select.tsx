@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Linking,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -70,11 +71,14 @@ const Select: React.FC<SelectProps> = ({
   }, [areas, alreadyFetched]);
 
   return (
-    <View style={{paddingTop: top}}>
+    <View>
       <View
         style={[
           styles.container,
-          {backgroundColor: dark ? Colors.primary : Colors.background},
+          {
+            backgroundColor: dark ? Colors.primary : Colors.background,
+            paddingTop: top + Platform.OS === 'ios' ? 5 : 10,
+          },
         ]}>
         <View style={styles.header}>
           <View>

@@ -1,5 +1,12 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, View, Linking} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  View,
+  Linking,
+  Platform,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -21,11 +28,14 @@ const MoreComing: React.FC = () => {
   ) as AreaReducer;
 
   return (
-    <View key={2123} style={{paddingTop: top}}>
+    <View key={2123}>
       <View
         style={[
           styles.container,
-          {backgroundColor: dark ? Colors.primary : Colors.background},
+          {
+            backgroundColor: dark ? Colors.primary : Colors.background,
+            paddingTop: top + Platform.OS === 'ios' ? 5 : 10,
+          },
         ]}>
         <Image
           source={

@@ -8,6 +8,7 @@ import {
   Linking,
   ActivityIndicator,
   Platform,
+  Text as RNText,
   TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
@@ -92,7 +93,11 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           </>
         ))}
       </Swiper>
-      <View style={{top, ...styles.help}}>
+      <View
+        style={{
+          top: Platform.OS === 'android' ? top + 10 : top,
+          ...styles.help,
+        }}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Ionicon
             name="ios-information-circle-outline"
@@ -101,7 +106,11 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           />
         </TouchableOpacity>
       </View>
-      <View style={{top, ...styles.backToTop}}>
+      <View
+        style={{
+          top: Platform.OS === 'android' ? top + 10 : top,
+          ...styles.backToTop,
+        }}>
         <TouchableOpacity onPress={() => backToTop()}>
           <Ionicon
             name="chevron-up-outline"
@@ -122,31 +131,25 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       />
       {mattal.facilities.supermarket && (
         <TouchableOpacity
+          style={styles.supermarketContainer}
           onPress={() => {
             setEmoji('Supermarket');
             showNotification();
           }}>
-          <Text
-            text={'🍫'}
-            style={styles.supermarket}
-            containerStyle={styles.supermarketContainer}
-          />
+          <RNText style={styles.supermarket}>🍫</RNText>
         </TouchableOpacity>
       )}
       {mattal.facilities.food && (
         <TouchableOpacity
+          style={{
+            ...styles.foodContainer,
+            right: mattal.facilities.supermarket ? 55 : 15,
+          }}
           onPress={() => {
             setEmoji('Restaurant');
             showNotification();
           }}>
-          <Text
-            text={'🍔'}
-            style={styles.food}
-            containerStyle={{
-              ...styles.foodContainer,
-              right: mattal.facilities.supermarket ? 50 : 12,
-            }}
-          />
+          <RNText style={styles.food}>🍔</RNText>
         </TouchableOpacity>
       )}
       <Button
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
   areaContainer: {
     position: 'absolute',
     left: 12,
-    bottom: Platform.select({ios: 125, android: 170}),
+    bottom: Platform.select({ios: 125, android: 140}),
   },
   name: {
     color: Colors.white,
@@ -199,7 +202,7 @@ const styles = StyleSheet.create({
   nameContainer: {
     position: 'absolute',
     left: 12,
-    bottom: Platform.select({ios: 95, android: 140}),
+    bottom: Platform.select({ios: 95, android: 110}),
   },
   area: {
     color: Colors.white,
@@ -208,8 +211,8 @@ const styles = StyleSheet.create({
   },
   supermarketContainer: {
     position: 'absolute',
-    right: 12,
-    bottom: Platform.select({ios: 45, android: 100}),
+    right: 15,
+    bottom: Platform.select({ios: 45, android: 60}),
   },
   supermarket: {
     fontWeight: '500',
@@ -217,8 +220,8 @@ const styles = StyleSheet.create({
   },
   foodContainer: {
     position: 'absolute',
-    right: 50,
-    bottom: Platform.select({ios: 45, android: 100}),
+    right: 55,
+    bottom: Platform.select({ios: 45, android: 60}),
   },
   food: {
     fontWeight: '500',
@@ -227,7 +230,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: Platform.select({ios: 40, android: 90}),
+    bottom: Platform.select({ios: 40, android: 60}),
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,
@@ -236,7 +239,7 @@ const styles = StyleSheet.create({
     fontSize: Fonts.md,
   },
   paginationStyle: {
-    bottom: Platform.select({ios: 17, android: 45}),
+    bottom: Platform.select({ios: 17, android: 35}),
   },
 });
 

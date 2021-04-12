@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import RNRestart from 'react-native-restart';
 import {Notification} from 'react-native-in-app-message';
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
           setMattals={setMattals}
         />
         {mattals?.map((mattal, i) => {
-          if (i === mattals.length - 1) {
+          if (i === mattals.length - 1 && Platform.OS !== 'android') {
             return (
               <>
                 <MattalHero
