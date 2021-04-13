@@ -101,7 +101,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       </Swiper>
       <View
         style={{
-          top: Platform.OS === 'android' ? top - 35 : top,
+          top: Platform.OS === 'android' ? top - 25 : top,
           ...styles.help,
         }}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -114,7 +114,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       </View>
       <View
         style={{
-          top: Platform.OS === 'android' ? top - 35 : top,
+          top: Platform.OS === 'android' ? top - 25 : top,
           ...styles.backToTop,
         }}>
         <TouchableOpacity onPress={() => backToTop()}>

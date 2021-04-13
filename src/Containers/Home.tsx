@@ -82,6 +82,7 @@ const Home: React.FC = () => {
         blurType={dark ? 'dark' : 'xlight'}
         text={`${emoji === 'Supermarket' ? '🍫' : '🍔'} ${emoji} Nearby`}
         style={{
+          backgroundColor: dark ? Colors.primary : Colors.white,
           marginTop: (StatusBar.currentHeight || 0) + 5,
         }}
       />
