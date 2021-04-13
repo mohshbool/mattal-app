@@ -81,6 +81,9 @@ const Home: React.FC = () => {
         textColor={dark ? Colors.white : Colors.primary}
         blurType={dark ? 'dark' : 'xlight'}
         text={`${emoji === 'Supermarket' ? '🍫' : '🍔'} ${emoji} Nearby`}
+        style={{
+          marginTop: (StatusBar.currentHeight || 0) + 5,
+        }}
       />
       <StatusBar hidden />
       <ViewPager

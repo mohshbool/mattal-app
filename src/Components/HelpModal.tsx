@@ -21,6 +21,8 @@ const HelpModal: React.FC<HelpModalProps> = ({isVisible, setModalVisible}) => {
       onBackButtonPress={closeModal}
       onBackdropPress={closeModal}
       onSwipeComplete={closeModal}
+      coverScreen={false}
+      deviceHeight={Dimensions.get('screen').height}
       swipeDirection="up">
       <View style={styles.outerContainer}>
         <View

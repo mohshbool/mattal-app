@@ -101,7 +101,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       </Swiper>
       <View
         style={{
-          top: Platform.OS === 'android' ? top - 5 : top,
+          top: Platform.OS === 'android' ? top - 35 : top,
           ...styles.help,
         }}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -114,7 +114,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       </View>
       <View
         style={{
-          top: Platform.OS === 'android' ? top - 5 : top,
+          top: Platform.OS === 'android' ? top - 35 : top,
           ...styles.backToTop,
         }}>
         <TouchableOpacity onPress={() => backToTop()}>
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   areaContainer: {
     position: 'absolute',
     left: 12,
-    bottom: Platform.select({ios: 125, android: 140}),
+    bottom: Platform.select({ios: 125, android: 150}),
   },
   name: {
     color: Colors.white,
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   nameContainer: {
     position: 'absolute',
     left: 12,
-    bottom: Platform.select({ios: 95, android: 110}),
+    bottom: Platform.select({ios: 95, android: 120}),
   },
   area: {
     color: Colors.white,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   supermarketContainer: {
     position: 'absolute',
     right: 15,
-    bottom: Platform.select({ios: 45, android: 60}),
+    bottom: Platform.select({ios: 45, android: 70}),
   },
   supermarket: {
     fontWeight: '500',
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   foodContainer: {
     position: 'absolute',
     right: 55,
-    bottom: Platform.select({ios: 45, android: 60}),
+    bottom: Platform.select({ios: 45, android: 70}),
   },
   food: {
     fontWeight: '500',
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: Platform.select({ios: 40, android: 60}),
+    bottom: Platform.select({ios: 40, android: 70}),
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     fontSize: Fonts.md,
   },
   paginationStyle: {
-    bottom: Platform.select({ios: 17, android: 35}),
+    bottom: Platform.select({ios: 17, android: 50}),
   },
 });
 
