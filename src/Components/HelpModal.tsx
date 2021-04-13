@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions, Platform} from 'react-native';
 import {useDarkMode} from 'react-native-dynamic';
 import Modal from 'react-native-modal';
 
@@ -21,6 +21,8 @@ const HelpModal: React.FC<HelpModalProps> = ({isVisible, setModalVisible}) => {
       onBackButtonPress={closeModal}
       onBackdropPress={closeModal}
       onSwipeComplete={closeModal}
+      coverScreen={Platform.OS !== 'android'}
+      deviceHeight={Dimensions.get('screen').height}
       swipeDirection="up">
       <View style={styles.outerContainer}>
         <View

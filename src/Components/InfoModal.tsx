@@ -30,6 +30,8 @@ const InfoModal: React.FC<InfoModalProps> = ({isVisible, setModalVisible}) => {
       onBackButtonPress={closeModal}
       onBackdropPress={closeModal}
       onSwipeComplete={closeModal}
+      coverScreen={false}
+      deviceHeight={Dimensions.get('screen').height}
       swipeDirection="up">
       <View style={styles.outerContainer}>
         <View
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     borderRadius: 12,
     width: '100%',
-    height: Dimensions.get('screen').height * 0.6,
+    height: Dimensions.get('screen').height * 0.55,
     paddingTop: 30,
     paddingBottom: 20,
   },
