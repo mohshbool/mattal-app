@@ -7,7 +7,10 @@ import {
   Dimensions,
   Linking,
   ActivityIndicator,
+  Platform,
+  Text as RNText,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import Swiper from 'react-native-swiper';
@@ -90,6 +93,11 @@ const MattalHero: React.FC<MattalHeroProps> = ({
   // @ts-ignore
   const showNotification = () => notificationRef?.current?.show();
 
+  BackHandler.addEventListener('hardwareBackPress', () => {
+    backToTop();
+    return true;
+  });
+
   return (
     <View key={mattal._id} style={styles.container}>
       <Swiper
@@ -123,7 +131,11 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           </>
         ))}
       </Swiper>
-      <View style={{top, ...styles.rateStar}}>
+      <View
+        style={{
+          top: Platform.OS === 'android' ? top - 25 : top,
+          ...styles.rateStar,
+        }}>
         <TouchableOpacity
           onPress={() => setRatingModalVisible(true)}
           disabled={hasRated}>
@@ -134,7 +146,12 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           />
         </TouchableOpacity>
       </View>
-      {/* <View style={{top, ...styles.help}}>
+      {/*
+      <View
+        style={{
+          top: Platform.OS === 'android' ? top - 25 : top,
+          ...styles.help,
+        }}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Ionicon
             name="ios-information-circle-outline"
@@ -143,7 +160,11 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           />
         </TouchableOpacity>
       </View> */}
-      <View style={{top, ...styles.backToTop}}>
+      <View
+        style={{
+          top: Platform.OS === 'android' ? top - 25 : top,
+          ...styles.backToTop,
+        }}>
         <TouchableOpacity onPress={() => backToTop()}>
           <Ionicon
             name="chevron-up-outline"
@@ -169,31 +190,25 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       />
       {mattal.facilities.supermarket && (
         <TouchableOpacity
+          style={styles.supermarketContainer}
           onPress={() => {
             setEmoji('Supermarket');
             showNotification();
           }}>
-          <Text
-            text={'🍫'}
-            style={styles.supermarket}
-            containerStyle={styles.supermarketContainer}
-          />
+          <RNText style={styles.supermarket}>🍫</RNText>
         </TouchableOpacity>
       )}
       {mattal.facilities.food && (
         <TouchableOpacity
+          style={{
+            ...styles.foodContainer,
+            right: mattal.facilities.supermarket ? 55 : 15,
+          }}
           onPress={() => {
             setEmoji('Restaurant');
             showNotification();
           }}>
-          <Text
-            text={'🍔'}
-            style={styles.food}
-            containerStyle={{
-              ...styles.foodContainer,
-              right: mattal.facilities.supermarket ? 50 : 12,
-            }}
-          />
+          <RNText style={styles.food}>🍔</RNText>
         </TouchableOpacity>
       )}
       <Button
@@ -243,7 +258,7 @@ const styles = StyleSheet.create({
   areaContainer: {
     position: 'absolute',
     left: 12,
-    bottom: 125,
+    bottom: Platform.select({ios: 125, android: 150}),
   },
   name: {
     color: Colors.white,
@@ -253,7 +268,7 @@ const styles = StyleSheet.create({
   nameContainer: {
     position: 'absolute',
     left: 12,
-    bottom: 95,
+    bottom: Platform.select({ios: 95, android: 120}),
   },
   area: {
     color: Colors.white,
@@ -262,17 +277,19 @@ const styles = StyleSheet.create({
   },
   supermarketContainer: {
     position: 'absolute',
-    right: 12,
-    bottom: 45,
+    right: 15,
+    bottom: Platform.select({ios: 45, android: 70}),
   },
   supermarket: {
     fontWeight: '500',
     fontSize: Fonts.xl,
+    textAlign: 'center',
+    fontFamily: Fonts.extrabold,
   },
   foodContainer: {
     position: 'absolute',
-    right: 50,
-    bottom: 45,
+    right: 55,
+    bottom: Platform.select({ios: 45, android: 70}),
   },
   food: {
     fontWeight: '500',
@@ -280,11 +297,12 @@ const styles = StyleSheet.create({
   },
   rateText: {
     fontSize: Fonts.l,
+    color: Colors.secondary,
   },
   ratingContainer: {
     position: 'absolute',
     right: 20,
-    bottom: 80,
+    bottom: Platform.select({ios: 80, android: 105}),
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,
@@ -292,7 +310,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: 40,
+    bottom: Platform.select({ios: 40, android: 70}),
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,
@@ -301,7 +319,7 @@ const styles = StyleSheet.create({
     fontSize: Fonts.md,
   },
   paginationStyle: {
-    bottom: 20,
+    bottom: Platform.select({ios: 17, android: 50}),
   },
 });
 

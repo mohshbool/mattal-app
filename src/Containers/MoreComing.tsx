@@ -1,5 +1,12 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, View, Linking} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  View,
+  Linking,
+  Platform,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -21,11 +28,14 @@ const MoreComing: React.FC = () => {
   ) as AreaReducer;
 
   return (
-    <View key={2123} style={{paddingTop: top}}>
+    <View key={2123}>
       <View
         style={[
           styles.container,
-          {backgroundColor: dark ? Colors.primary : Colors.background},
+          {
+            backgroundColor: dark ? Colors.primary : Colors.background,
+            paddingTop: top + Platform.OS === 'ios' ? 5 : 10,
+          },
         ]}>
         <Image
           source={
@@ -33,7 +43,10 @@ const MoreComing: React.FC = () => {
               ? require('../Assets/Images/more-top.dark.jpg')
               : require('../Assets/Images/more-top.jpg')
           }
-          style={styles.logoTop}
+          style={[
+            styles.logoTop,
+            {marginTop: top + Platform.OS === 'ios' ? 5 : 10},
+          ]}
         />
         <Text
           text={`Stay tuned for more Mattals in ${selectedArea} `}
