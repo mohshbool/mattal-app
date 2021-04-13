@@ -128,6 +128,7 @@ const Select: React.FC<SelectProps> = ({
               onPress={() => {
                 setMattals([todaysMattal]);
                 dispatch(updateSelectedArea(todaysMattal?.area));
+                goToMattals();
               }}
               textStyle={styles.todaysText}
               containerStyle={styles.todaysTextContainer}
