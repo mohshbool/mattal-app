@@ -83,7 +83,7 @@ const Home: React.FC = () => {
         text={`${emoji === 'Supermarket' ? '🍫' : '🍔'} ${emoji} Nearby`}
         style={{
           backgroundColor: dark ? Colors.primary : Colors.white,
-          marginTop: (StatusBar.currentHeight || 0) + 5,
+          marginTop: (StatusBar.currentHeight || 0) + 10,
         }}
       />
       {Platform.OS === 'android' && <StatusBar hidden />}
