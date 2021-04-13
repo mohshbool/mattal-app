@@ -8,6 +8,7 @@ import {
   Linking,
   ActivityIndicator,
   Platform,
+  StatusBar,
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -71,13 +72,21 @@ const Select: React.FC<SelectProps> = ({
   }, [areas, alreadyFetched]);
 
   return (
-    <View>
+    <View
+    // style={{
+    //   paddingTop:
+    //     Platform.OS === 'ios' ? top + 5 : (StatusBar.currentHeight || 0) + 5,
+    // }}
+    >
       <View
         style={[
           styles.container,
           {
             backgroundColor: dark ? Colors.primary : Colors.background,
-            paddingTop: top + Platform.OS === 'ios' ? 5 : 10,
+            paddingTop:
+              Platform.OS === 'ios'
+                ? top + 5
+                : (StatusBar.currentHeight || 0) + 5,
           },
         ]}>
         <View style={styles.header}>

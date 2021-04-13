@@ -6,6 +6,7 @@ import com.facebook.react.ReactActivity;
 import android.view.WindowManager;
 import android.os.Build;
 import android.os.Bundle;
+// import android.view.View;
 
 public class MainActivity extends ReactActivity {
 
@@ -26,6 +27,7 @@ public class MainActivity extends ReactActivity {
       getWindow().setAttributes(layoutParams);
       getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
       getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+      // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
     super.onCreate(savedInstanceState);
   }

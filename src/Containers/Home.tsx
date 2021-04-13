@@ -1,12 +1,12 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import RNRestart from 'react-native-restart';
+import {useDarkMode} from 'react-native-dynamic';
+import {Platform, StatusBar, StyleSheet} from 'react-native';
 import {Notification} from 'react-native-in-app-message';
 import ViewPager from '@react-native-community/viewpager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {AreaReducer, ConfigsReducer} from '../Action/types';
 import {apiRequest} from '../API';
 import {RootState} from '../Reducer';
 import Fonts from '../Theme/Fonts';
@@ -15,7 +15,7 @@ import {Mattal} from '../types';
 import MattalHero from './MattalHero';
 import Select from './Select';
 import MoreComing from './MoreComing';
-import {useDarkMode} from 'react-native-dynamic';
+import {AreaReducer, ConfigsReducer} from '../Action/types';
 
 const Home: React.FC = () => {
   const {selectedArea} = useSelector<RootState>(
@@ -82,6 +82,7 @@ const Home: React.FC = () => {
         blurType={dark ? 'dark' : 'xlight'}
         text={`${emoji === 'Supermarket' ? '🍫' : '🍔'} ${emoji} Nearby`}
       />
+      <StatusBar hidden />
       <ViewPager
         ref={viewPager}
         style={[

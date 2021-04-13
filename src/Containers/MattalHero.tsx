@@ -10,6 +10,7 @@ import {
   Platform,
   Text as RNText,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import Swiper from 'react-native-swiper';
@@ -60,6 +61,11 @@ const MattalHero: React.FC<MattalHeroProps> = ({
   // @ts-ignore
   const showNotification = () => notificationRef?.current?.show();
 
+  BackHandler.addEventListener('hardwareBackPress', () => {
+    backToTop();
+    return true;
+  });
+
   return (
     <View key={mattal._id} style={styles.container}>
       <Swiper
@@ -95,7 +101,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       </Swiper>
       <View
         style={{
-          top: Platform.OS === 'android' ? top + 10 : top,
+          top: Platform.OS === 'android' ? top - 5 : top,
           ...styles.help,
         }}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -108,7 +114,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       </View>
       <View
         style={{
-          top: Platform.OS === 'android' ? top + 10 : top,
+          top: Platform.OS === 'android' ? top - 5 : top,
           ...styles.backToTop,
         }}>
         <TouchableOpacity onPress={() => backToTop()}>
