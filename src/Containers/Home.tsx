@@ -86,7 +86,7 @@ const Home: React.FC = () => {
           marginTop: (StatusBar.currentHeight || 0) + 5,
         }}
       />
-      <StatusBar hidden />
+      {Platform.OS === 'android' && <StatusBar hidden />}
       <ViewPager
         ref={viewPager}
         style={[
