@@ -60,12 +60,7 @@ const Select: React.FC<SelectProps> = ({
   }, [areas, alreadyFetched]);
 
   return (
-    <View
-    // style={{
-    //   paddingTop:
-    //     Platform.OS === 'ios' ? top + 5 : (StatusBar.currentHeight || 0) + 5,
-    // }}
-    >
+    <View>
       <View
         style={[
           styles.container,

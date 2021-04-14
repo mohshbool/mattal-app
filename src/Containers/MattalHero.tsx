@@ -131,21 +131,23 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           </>
         ))}
       </Swiper>
-      <View
-        style={{
-          top: Platform.OS === 'android' ? top - 25 : top,
-          ...styles.rateStar,
-        }}>
-        <TouchableOpacity
-          onPress={() => setRatingModalVisible(true)}
-          disabled={hasRated}>
-          <Ionicon
-            name="ios-star"
-            size={Fonts.xxxxl}
-            color={hasRated ? Colors.primary : Colors.secondary}
-          />
-        </TouchableOpacity>
-      </View>
+      {!!mattal.rating && (
+        <View
+          style={{
+            top: Platform.OS === 'android' ? top - 25 : top,
+            ...styles.rateStar,
+          }}>
+          <TouchableOpacity
+            onPress={() => setRatingModalVisible(true)}
+            disabled={hasRated}>
+            <Ionicon
+              name="ios-star"
+              size={Fonts.xxxxl}
+              color={hasRated ? Colors.primary : Colors.secondary}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       {/*
       <View
         style={{
@@ -183,11 +185,13 @@ const MattalHero: React.FC<MattalHeroProps> = ({
         style={styles.area}
         containerStyle={styles.nameContainer}
       />
-      <Text
-        text={'⭐ ' + mattal.rating.toString()}
-        style={styles.rateText}
-        containerStyle={styles.ratingContainer}
-      />
+      {!!mattal.rating && (
+        <Text
+          text={'⭐ ' + mattal.rating.toString()}
+          style={styles.rateText}
+          containerStyle={styles.ratingContainer}
+        />
+      )}
       {mattal.facilities.supermarket && (
         <TouchableOpacity
           style={styles.supermarketContainer}
