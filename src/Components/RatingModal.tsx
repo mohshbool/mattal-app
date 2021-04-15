@@ -26,6 +26,7 @@ const RatingModal: React.FC<RatingModalProps> = ({
   const dark = useDarkMode();
   const [disabled, setDisabled] = React.useState<boolean>(true);
   const closeModal = () => setModalVisible(false);
+
   return (
     <Modal
       isVisible={isVisible}
@@ -41,7 +42,7 @@ const RatingModal: React.FC<RatingModalProps> = ({
             styles.innerContainer,
             {
               backgroundColor: dark ? Colors.primary : Colors.white,
-              height: Dimensions.get('screen').height * (disabled ? 0.2 : 0.27),
+              height: Dimensions.get('screen').height * (disabled ? 0.25 : 0.3),
             },
           ]}>
           <AirbnbRating
@@ -59,25 +60,27 @@ const RatingModal: React.FC<RatingModalProps> = ({
             unSelectedColor={dark ? Colors.white : Colors.background}
             reviewColor={dark ? Colors.secondary : Colors.primary}
           />
-          <Button
-            text="Rate"
-            disabled={disabled}
-            onPress={ratingSubmit}
-            containerStyle={{
-              ...styles.rateContainer,
-              backgroundColor: dark
-                ? disabled
-                  ? Colors.primary
-                  : Colors.secondary
-                : disabled
-                ? Colors.white
-                : Colors.primary,
-            }}
-            textStyle={{
-              ...styles.rateText,
-              color: dark ? Colors.primary : Colors.white,
-            }}
-          />
+          {!disabled && (
+            <Button
+              text="Rate"
+              disabled={disabled}
+              onPress={ratingSubmit}
+              containerStyle={{
+                ...styles.rateContainer,
+                backgroundColor: dark
+                  ? disabled
+                    ? Colors.primary
+                    : Colors.secondary
+                  : disabled
+                  ? Colors.white
+                  : Colors.primary,
+              }}
+              textStyle={{
+                ...styles.rateText,
+                color: dark ? Colors.primary : Colors.white,
+              }}
+            />
+          )}
         </View>
       </View>
     </Modal>

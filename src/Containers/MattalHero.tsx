@@ -10,6 +10,7 @@ import {
   Platform,
   Text as RNText,
   TouchableOpacity,
+  StatusBar,
   BackHandler,
 } from 'react-native';
 import {useSelector} from 'react-redux';
@@ -52,7 +53,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
   notificationRef,
 }) => {
   const dark = useDarkMode();
-  const {top} = useSafeAreaInsets();
+  const {top, bottom: nativeBottom} = useSafeAreaInsets();
   const [rating, setRating] = React.useState<number>(0);
   const [hasRated, setHasRated] = React.useState<boolean>(mattal.ratedByDevice);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
@@ -90,18 +91,21 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       });
   };
 
+  const bottom = Platform.OS === 'android' ? nativeBottom : nativeBottom - 15;
+
   // @ts-ignore
   const showNotification = () => notificationRef?.current?.show();
 
   BackHandler.addEventListener('hardwareBackPress', () => {
-    backToTop();
-    return true;
+    setModalVisible(false);
+    setRatingModalVisible(false);
+    return false;
   });
 
   return (
     <View key={mattal._id} style={styles.container}>
       <Swiper
-        paginationStyle={styles.paginationStyle}
+        paginationStyle={{bottom: bottom + 5}}
         activeDotColor={Colors.white}
         dotColor={Colors.primary}
         loop={false}>
@@ -134,7 +138,10 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       {!!mattal.rating && (
         <View
           style={{
-            top: Platform.OS === 'android' ? top - 25 : top,
+            top:
+              Platform.OS === 'android'
+                ? (StatusBar.currentHeight || 24) - 10
+                : top,
             ...styles.rateStar,
           }}>
           <TouchableOpacity
@@ -151,7 +158,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       {/*
       <View
         style={{
-          top: Platform.OS === 'android' ? top - 25 : top,
+          top: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) - 10 : top,
           ...styles.help,
         }}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -164,7 +171,10 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       </View> */}
       <View
         style={{
-          top: Platform.OS === 'android' ? top - 25 : top,
+          top:
+            Platform.OS === 'android'
+              ? (StatusBar.currentHeight || 24) - 10
+              : top,
           ...styles.backToTop,
         }}>
         <TouchableOpacity onPress={() => backToTop()}>
@@ -178,23 +188,34 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       <Text
         text={mattal.name}
         style={styles.name}
-        containerStyle={styles.areaContainer}
+        containerStyle={{...styles.areaContainer, bottom: bottom + 120}}
       />
       <Text
         text={mattal.area}
         style={styles.area}
-        containerStyle={styles.nameContainer}
+        containerStyle={{...styles.nameContainer, bottom: bottom + 90}}
       />
       {!!mattal.rating && (
         <Text
           text={'⭐ ' + mattal.rating.toString()}
           style={styles.rateText}
-          containerStyle={styles.ratingContainer}
+          containerStyle={{
+            ...styles.ratingContainer,
+            bottom:
+              bottom +
+              (!mattal.facilities.supermarket && !mattal.facilities.food
+                ? 30
+                : 70),
+          }}
         />
       )}
       {mattal.facilities.supermarket && (
         <TouchableOpacity
-          style={styles.supermarketContainer}
+          style={{
+            ...styles.supermarketContainer,
+            right: mattal.facilities.food ? 15 : 22,
+            bottom: bottom + 30,
+          }}
           onPress={() => {
             setEmoji('Supermarket');
             showNotification();
@@ -207,6 +228,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           style={{
             ...styles.foodContainer,
             right: mattal.facilities.supermarket ? 55 : 15,
+            bottom: bottom + 30,
           }}
           onPress={() => {
             setEmoji('Restaurant');
@@ -219,7 +241,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
         outlined
         text="Take me to the Mattal"
         onPress={() => Linking.openURL(mattal.maps_url)}
-        containerStyle={styles.buttonContainer}
+        containerStyle={{...styles.buttonContainer, bottom: bottom + 30}}
         textStyle={styles.buttonText}
       />
       <HelpModal isVisible={modalVisible} setModalVisible={setModalVisible} />
@@ -262,7 +284,6 @@ const styles = StyleSheet.create({
   areaContainer: {
     position: 'absolute',
     left: 12,
-    bottom: Platform.select({ios: 125, android: 150}),
   },
   name: {
     color: Colors.white,
@@ -272,7 +293,6 @@ const styles = StyleSheet.create({
   nameContainer: {
     position: 'absolute',
     left: 12,
-    bottom: Platform.select({ios: 95, android: 120}),
   },
   area: {
     color: Colors.white,
@@ -282,7 +302,6 @@ const styles = StyleSheet.create({
   supermarketContainer: {
     position: 'absolute',
     right: 15,
-    bottom: Platform.select({ios: 45, android: 70}),
   },
   supermarket: {
     fontWeight: '500',
@@ -293,7 +312,6 @@ const styles = StyleSheet.create({
   foodContainer: {
     position: 'absolute',
     right: 55,
-    bottom: Platform.select({ios: 45, android: 70}),
   },
   food: {
     fontWeight: '500',
@@ -306,7 +324,6 @@ const styles = StyleSheet.create({
   ratingContainer: {
     position: 'absolute',
     right: 20,
-    bottom: Platform.select({ios: 80, android: 105}),
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,
@@ -314,16 +331,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: Platform.select({ios: 40, android: 70}),
     paddingVertical: 5,
     paddingHorizontal: 0,
     borderRadius: 8,
   },
   buttonText: {
     fontSize: Fonts.md,
-  },
-  paginationStyle: {
-    bottom: Platform.select({ios: 17, android: 50}),
   },
 });
 

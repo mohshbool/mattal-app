@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Platform,
   StatusBar,
+  BackHandler,
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -33,7 +34,7 @@ interface SelectProps {
 
 const Select: React.FC<SelectProps> = ({
   todaysMattal,
-  setMattals,
+  // setMattals,
   goToMattals,
 }) => {
   const dispatch = useDispatch();
@@ -58,6 +59,11 @@ const Select: React.FC<SelectProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areas, alreadyFetched]);
+
+  BackHandler.addEventListener('hardwareBackPress', () => {
+    setModalVisible(false);
+    return false;
+  });
 
   return (
     <View>
@@ -109,9 +115,9 @@ const Select: React.FC<SelectProps> = ({
             <Button
               text={`Today's Mattal: ${todaysMattal?.name}`}
               onPress={() => {
-                setMattals([todaysMattal]);
+                // setMattals([todaysMattal]);
                 dispatch(updateSelectedArea(todaysMattal?.area));
-                goToMattals();
+                setTimeout(goToMattals, 200);
               }}
               textStyle={styles.todaysText}
               containerStyle={styles.todaysTextContainer}
