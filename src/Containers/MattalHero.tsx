@@ -22,7 +22,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {ConfigsReducer} from '../Action/types';
 import Button from '../Components/Button';
-import HelpModal from '../Components/HelpModal';
+// import HelpModal from '../Components/HelpModal';
 import Text from '../Components/Text';
 import {API_URL, API_VERSION} from '../Configs';
 import {RootState} from '../Reducer';
@@ -55,8 +55,8 @@ const MattalHero: React.FC<MattalHeroProps> = ({
   const dark = useDarkMode();
   const {top, bottom: nativeBottom} = useSafeAreaInsets();
   const [rating, setRating] = React.useState<number>(0);
-  const [hasRated, setHasRated] = React.useState<boolean>(mattal.ratedByDevice);
-  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+  const [hasRated, setHasRated] = React.useState<boolean>(false);
+  // const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [ratingModalVisible, setRatingModalVisible] = React.useState<boolean>(
     false,
   );
@@ -91,13 +91,17 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       });
   };
 
+  React.useEffect(() => setHasRated(mattal.ratedByDevice), [
+    mattal.ratedByDevice,
+  ]);
+
   const bottom = Platform.OS === 'android' ? nativeBottom : nativeBottom - 15;
 
   // @ts-ignore
   const showNotification = () => notificationRef?.current?.show();
 
   BackHandler.addEventListener('hardwareBackPress', () => {
-    setModalVisible(false);
+    // setModalVisible(false);
     setRatingModalVisible(false);
     return false;
   });
@@ -197,7 +201,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
       />
       {!!mattal.rating && (
         <Text
-          text={'⭐ ' + mattal.rating.toString()}
+          text={'⭐ ' + (Math.floor(mattal.rating * 2) / 2).toString()}
           style={styles.rateText}
           containerStyle={{
             ...styles.ratingContainer,
@@ -244,7 +248,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
         containerStyle={{...styles.buttonContainer, bottom: bottom + 30}}
         textStyle={styles.buttonText}
       />
-      <HelpModal isVisible={modalVisible} setModalVisible={setModalVisible} />
+      {/* <HelpModal isVisible={modalVisible} setModalVisible={setModalVisible} /> */}
       <RatingModal
         isVisible={ratingModalVisible}
         setModalVisible={setRatingModalVisible}
