@@ -78,6 +78,7 @@ const Home: React.FC = () => {
       goOneUp();
       return true;
     }
+    BackHandler.exitApp();
   });
 
   return (
@@ -93,6 +94,7 @@ const Home: React.FC = () => {
           marginTop: (StatusBar.currentHeight || 0) + 10,
         }}
       />
+      {console.log('currentPage1: ' + currentPage)}
       {Platform.OS === 'android' && <StatusBar hidden />}
       <ViewPager
         ref={viewPager}
