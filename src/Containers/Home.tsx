@@ -74,11 +74,10 @@ const Home: React.FC = () => {
   }, [selectedArea]);
 
   BackHandler.addEventListener('hardwareBackPress', () => {
-    if (currentPage !== 0) {
-      goOneUp();
+    if (currentPage === 0) {
+      BackHandler.exitApp();
       return true;
     }
-    BackHandler.exitApp();
   });
 
   return (
@@ -129,6 +128,8 @@ const Home: React.FC = () => {
               setEmoji={setEmoji}
               backToTop={backToTop}
               notificationRef={notificationRef}
+              goOneUp={goOneUp}
+              currentPage={currentPage}
             />
           );
         })}

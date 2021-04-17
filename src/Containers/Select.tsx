@@ -61,8 +61,12 @@ const Select: React.FC<SelectProps> = ({
   }, [areas, alreadyFetched]);
 
   BackHandler.addEventListener('hardwareBackPress', () => {
-    setModalVisible(false);
-    return false;
+    if (modalVisible) {
+      setModalVisible(false);
+    } else {
+      BackHandler.exitApp();
+    }
+    return true;
   });
 
   return (

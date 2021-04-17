@@ -37,6 +37,8 @@ interface MattalHeroProps {
   setEmoji: any;
   backToTop: any;
   notificationRef: any;
+  goOneUp?: any;
+  currentPage?: number;
 }
 
 function replace(array: any[], index: number, replacement: any) {
@@ -51,6 +53,8 @@ const MattalHero: React.FC<MattalHeroProps> = ({
   setEmoji,
   backToTop,
   notificationRef,
+  goOneUp,
+  currentPage,
 }) => {
   const dark = useDarkMode();
   const {top, bottom: nativeBottom} = useSafeAreaInsets();
@@ -101,17 +105,28 @@ const MattalHero: React.FC<MattalHeroProps> = ({
   const showNotification = () => notificationRef?.current?.show();
 
   BackHandler.addEventListener('hardwareBackPress', () => {
-    // setModalVisible(false);
-    setRatingModalVisible(false);
-    return false;
+    if (ratingModalVisible) {
+      setRatingModalVisible(false);
+    } else if (currentPage !== 0) {
+      goOneUp();
+    } else {
+      BackHandler.exitApp();
+    }
+    return true;
   });
+
+  const noAndroidAndNotIphoneX = Platform.OS === 'android' || bottom > 10;
 
   return (
     <View key={mattal._id} style={styles.container}>
       <Swiper
-        paginationStyle={{bottom: bottom + 5}}
+        paginationStyle={{
+          bottom: bottom + 5 + (noAndroidAndNotIphoneX ? 0 : 12),
+        }}
         activeDotColor={Colors.white}
         dotColor={Colors.primary}
+        // autoplayTimeout={1.5}
+        // autoplay={true}
         loop={false}>
         {mattal.images.map((image, i) => (
           <>
@@ -218,7 +233,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           style={{
             ...styles.supermarketContainer,
             right: mattal.facilities.food ? 15 : 22,
-            bottom: bottom + 30,
+            bottom: bottom + 30 + (noAndroidAndNotIphoneX ? 0 : 8),
           }}
           onPress={() => {
             setEmoji('Supermarket');
@@ -232,7 +247,7 @@ const MattalHero: React.FC<MattalHeroProps> = ({
           style={{
             ...styles.foodContainer,
             right: mattal.facilities.supermarket ? 55 : 15,
-            bottom: bottom + 30,
+            bottom: bottom + 30 + (noAndroidAndNotIphoneX ? 0 : 8),
           }}
           onPress={() => {
             setEmoji('Restaurant');
@@ -245,7 +260,10 @@ const MattalHero: React.FC<MattalHeroProps> = ({
         outlined
         text="Take me to the Mattal"
         onPress={() => Linking.openURL(mattal.maps_url)}
-        containerStyle={{...styles.buttonContainer, bottom: bottom + 30}}
+        containerStyle={{
+          ...styles.buttonContainer,
+          bottom: bottom + 30 + (noAndroidAndNotIphoneX ? 0 : 8),
+        }}
         textStyle={styles.buttonText}
       />
       {/* <HelpModal isVisible={modalVisible} setModalVisible={setModalVisible} /> */}
