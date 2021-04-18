@@ -6,6 +6,11 @@ import com.facebook.react.ReactActivity;
 import android.view.WindowManager;
 import android.os.Build;
 import android.os.Bundle;
+
+//https://stackoverflow.com/questions/35964078/how-to-disable-font-scaling-in-rn-for-android
+import android.content.res.Configuration;
+import android.content.Context;
+import android.util.DisplayMetrics;
 // import android.view.View;
 
 public class MainActivity extends ReactActivity {
@@ -30,5 +35,17 @@ public class MainActivity extends ReactActivity {
       // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
     super.onCreate(savedInstanceState);
+    adjustFontScale(getApplicationContext(),getResources().getConfiguration());
   }
+
+  public void adjustFontScale(Context context, Configuration configuration) {
+    if (configuration.fontScale != 1) {
+        configuration.fontScale = 1;
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(metrics);
+        metrics.scaledDensity = configuration.fontScale * metrics.density;
+        context.getResources().updateConfiguration(configuration, metrics);
+    }
+}
 }
