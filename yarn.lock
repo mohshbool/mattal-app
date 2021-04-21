@@ -948,6 +948,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-5.0.9.tgz#277153d3f108ae68dfe6a27a061d506858fc897f"
   integrity sha512-yjwpY2htsaw3vEKRqYmJLKjrYpzODEtVtKtKh8QEi1T+okzZhRKXFgPTWg3pVYMITDfH0vFqkqjWFwDiFj0nmg==
 
+"@react-native-firebase/analytics@^11.3.1":
+  version "11.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-11.3.1.tgz#df6e148d05cc28811b2e4100645ab54b5909c2ea"
+  integrity sha512-2S/5YUehV/LHokRKw0PgW1MUKEu9seqgpRTp5F+LEK+5Mr/IGvnvttwZTAMze3ep8OlGhu5Avj3Mk82pzzw6dQ==
+
 "@react-native-firebase/app@^11.0.0":
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-11.0.0.tgz#dee23fd79efa42c008306d2e9163afd9391f1567"

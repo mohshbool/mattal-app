@@ -47,5 +47,5 @@ public class MainActivity extends ReactActivity {
         metrics.scaledDensity = configuration.fontScale * metrics.density;
         context.getResources().updateConfiguration(configuration, metrics);
     }
-}
+  }
 }
